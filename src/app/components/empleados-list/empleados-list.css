@@ -1,0 +1,13 @@
+.empleados-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0.5rem;
+    background-color: #D9DCD6;
+    padding: 0.5rem;
+}
+
+.botones-container{
+    display: flex;
+    gap: 1rem;
+}

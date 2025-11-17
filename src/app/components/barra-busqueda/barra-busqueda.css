@@ -1,0 +1,21 @@
+.barra-busqueda-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: #D9DCD6;
+}
+
+.busqueda{
+    display: flex;
+    height: 3rem;
+    gap: 2rem;
+    justify-content:space-between;
+}
+
+.busqueda input{
+    width: 90vw;
+}
+
+.busqueda button{
+    width: 8vw;
+}

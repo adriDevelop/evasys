@@ -1,0 +1,27 @@
+.container-cabecera{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    justify-content: space-between;
+}
+
+.container-datos{
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    width: 100vw;
+}
+
+.container-enlaces{
+    display: flex;
+    gap: 2rem;
+}
+
+.container-enlaces a{
+    text-decoration: none;
+    color: black;
+}
+
+.container-enlaces a:hover{
+    color:#2F6690;
+}

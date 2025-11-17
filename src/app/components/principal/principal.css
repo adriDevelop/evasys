@@ -1,0 +1,11 @@
+.container-cabecera{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.container-empleados-auditeles{
+    display:flex;
+    flex-direction: column;
+    margin-top: 3rem;
+}

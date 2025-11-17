@@ -1,0 +1,30 @@
+.general-container-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.title-section{
+    margin-bottom: 2rem;
+    text-align: start;
+    color: #D9DCD6;
+}
+
+.title-section h1{
+    font-size: 2rem;
+    font-weight: 100;
+}
+
+.form-iniciar-sesion{
+    width: 40rem;
+    padding: 1rem;
+    background-color: #D9DCD6;
+    border-radius: 1rem;
+}
+
+.form-iniciar-sesion form{
+    padding: 2rem;
+}
