@@ -1,19 +1,14 @@
 import { Routes } from '@angular/router';
-import { Login } from './components/login/login';
-import { Principal } from './components/principal/principal';
-import { PrincipalEmpleados } from './components/principal-empleados/principal-empleados';
-import { PrincipalAuditeles } from './components/principal-auditeles/principal-auditeles';
+import { Login } from './pages/content/login/login';
+import { ErrorComponent } from './shared/components/error-component/error-component';
 
 export const routes: Routes = [
-  { path: 'login', component: Login, pathMatch: 'full' },
+  { path: 'login', component: Login },
   {
-    path: '',
-    component: Principal,
-    children: [
-      { path: '', redirectTo: 'empleados', pathMatch: 'full' }, // Opcional: ruta por defecto
-      { path: 'empleados', component: PrincipalEmpleados },
-      { path: 'auditeles', component: PrincipalAuditeles },
-    ],
+    path: 'empleados',
+    loadChildren: () => import('./pages/content/content.routes').then((r) => r.CONTENT_ROUTES)
   },
-  { path: '**', redirectTo: 'login' },
+  { path: '**',
+    component: ErrorComponent
+   },
 ];

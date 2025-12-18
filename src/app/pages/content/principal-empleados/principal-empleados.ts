@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { EmpleadosList } from "../empleados-list/empleados-list";
-import { BarraBusqueda } from "../barra-busqueda/barra-busqueda";
-
+import { EmpleadosList } from '../../../shared/components/empleados-list/empleados-list'; 
+import { BarraBusqueda } from '../../../shared/components/barra-busqueda/barra-busqueda';
 @Component({
   selector: 'app-principal-empleados',
   imports: [EmpleadosList, BarraBusqueda],
