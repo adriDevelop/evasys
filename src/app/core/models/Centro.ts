@@ -1,7 +1,7 @@
 import { Departamento } from './Departamento';
 
-export interface Central{
-    id?: number;
+export interface Centro{
+    id_centro?: number;
     nombre: string;
     departamentos: Array<Departamento>
 }

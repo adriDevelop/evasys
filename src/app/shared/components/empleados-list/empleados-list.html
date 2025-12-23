@@ -1,9 +1,9 @@
 <div class="empleados-container">
     <div class="datos-empleado">
-        <h3>Nombre del empleado</h3>
+        <h3>{{empleado.nombre}}</h3>
     </div>
     <div class="botones-container">
-        <button class="btn btn-outline">Editar</button>
-        <button class="btn btn-outline-danger">Dar de baja</button>
+        <button class="btn btn-outline" [routerLink]="['/empleados/editarEmpleado', empleado.id_empleado! ]">Editar</button>
+        <button class="btn btn-outline-danger" (click)="eliminarEmpleado(empleado.id_empleado!)">Dar de baja</button>
     </div>
 </div>

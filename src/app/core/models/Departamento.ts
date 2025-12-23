@@ -1,9 +1,9 @@
-import { Central } from './Central';
+import { Centro } from './Centro';
 import { Empleado } from './Empleado';
 
 export interface Departamento{
-    id?: number;
+    id_departamento?: number;
     nombre: string;
-    central: Central,
+    centro: Centro,
     empleados: Array<Empleado>
 }

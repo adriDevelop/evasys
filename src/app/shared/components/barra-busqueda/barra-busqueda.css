@@ -17,5 +17,9 @@
 }
 
 .busqueda button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 8vw;
+    font-size: 14px;
 }

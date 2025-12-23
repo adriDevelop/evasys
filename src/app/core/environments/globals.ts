@@ -1,0 +1,8 @@
+export const ROUTE_API = "http://localhost:8080/api/"
+export const ROUTE_EMPLEADOS = ROUTE_API.concat("empleados");
+export const ROUTE_EMPLEADO = ROUTE_API.concat("empleado");
+export const ROUTE_CENTRO = ROUTE_API.concat("centro");
+export const ROUTE_CENTROS = ROUTE_API.concat("centros");
+export const ROUTE_DEPARTAMENTO = ROUTE_API.concat("departamento");
+export const ROUTE_DEPARTAMENTOS = ROUTE_API.concat("departamentos");
+export const ROUTE_COORDINADOR = ROUTE_API.concat("coordinador");
