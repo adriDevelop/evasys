@@ -3,6 +3,8 @@
         <app-barra-busqueda [arrayBotones]="['Añadir auditel', 'Generar informe', 'Buscar']"></app-barra-busqueda>
     </section>
     <section class="auditeles-list-container">
-        <app-auditeles-list></app-auditeles-list>
+        @for (auditoria of auditorias; track $index) {
+            <app-auditeles-list (auditoriaObject) = "auditoria"></app-auditeles-list>
+        }
     </section>
 </section>

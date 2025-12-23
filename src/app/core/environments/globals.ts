@@ -6,3 +6,4 @@ export const ROUTE_CENTROS = ROUTE_API.concat("centros");
 export const ROUTE_DEPARTAMENTO = ROUTE_API.concat("departamento");
 export const ROUTE_DEPARTAMENTOS = ROUTE_API.concat("departamentos");
 export const ROUTE_COORDINADOR = ROUTE_API.concat("coordinador");
+export const ROUTE_AUDITORIAS = ROUTE_API.concat("audiciones");

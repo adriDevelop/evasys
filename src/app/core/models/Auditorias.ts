@@ -1,3 +1,4 @@
 export interface Auditorias{
-    id_auditoria?: string
+    id_auditoria?: string,
+    nombre: string,
 }

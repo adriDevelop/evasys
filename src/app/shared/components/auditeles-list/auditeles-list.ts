@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Auditorias } from '../../../core/models/Auditorias';
 
 @Component({
   selector: 'app-auditeles-list',
@@ -8,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class AuditelesList {
 
+    @Input()
+    auditoria: Auditorias;
 }
