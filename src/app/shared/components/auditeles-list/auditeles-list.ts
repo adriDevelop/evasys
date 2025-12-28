@@ -10,5 +10,5 @@ import { Auditorias } from '../../../core/models/Auditorias';
 export class AuditelesList {
 
     @Input()
-    auditoria: Auditorias;
+    auditoriaObject: Auditorias;
 }

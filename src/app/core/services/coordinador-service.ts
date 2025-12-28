@@ -14,5 +14,9 @@ export class CoordinadorService {
     getCoordinadoresDepartamentoCentral(idDepartamento: number, idCentro: number): Observable<Array<Coordinador>>{
         return this._httpClient.get<Array<Coordinador>>(`${ROUTE_COORDINADOR}/${idDepartamento}/${idCentro}`);
     }
+
+    getCoordinadorById(id_coordinador: number): Observable<Coordinador>{
+        return this._httpClient.get<Coordinador>(`${ROUTE_COORDINADOR}/${id_coordinador}`);
+    }
   
 }

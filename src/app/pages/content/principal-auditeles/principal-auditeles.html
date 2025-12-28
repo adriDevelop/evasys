@@ -4,7 +4,7 @@
     </section>
     <section class="auditeles-list-container">
         @for (auditoria of auditorias; track $index) {
-            <app-auditeles-list (auditoriaObject) = "auditoria"></app-auditeles-list>
+            <app-auditeles-list [auditoriaObject] = "auditoria"></app-auditeles-list>
         }
     </section>
 </section>
