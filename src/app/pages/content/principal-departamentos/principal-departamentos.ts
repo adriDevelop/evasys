@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ComunicationService } from '../../../core/services/comunication-service';
 import { AuthService } from '../../../core/services/auth-service';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { DepartamentoServices } from '../../../core/services/departamento-servic
 })
 export class PrincipalDepartamentos implements OnInit{
 
+    rolUsuario: string;
     departamentos: Array<Departamento>;
     estadoLogin: boolean;
 
@@ -25,7 +26,7 @@ export class PrincipalDepartamentos implements OnInit{
         private _router: Router = inject(Router),
         private _departamentoService: DepartamentoServices = inject(DepartamentoServices)
     ){
-
+        this.rolUsuario = this._authService.getRolFromPayload();
     }
 
 
@@ -40,15 +41,25 @@ export class PrincipalDepartamentos implements OnInit{
             this._router.navigate(['/']);
         }
 
-        if(this._authService.getRolFromPayload() != 'super-admin'){
-            this._router.navigate(['/empleados/listadoEmpleados']);
+        if (this.rolUsuario != "super-admin"){
+            this._router.navigate(['/empleados/listadoEmpleados'])
         }
 
-        this._departamentoService.getAllDepartamentos().subscribe({
-            next: (departamentos) =>{
-                this.departamentos = departamentos;
-            }
+        this._departamentoService.getAllDepartamentos().subscribe((departamentos) => {
+            this.departamentos = departamentos;
         })
+    }
+
+    onBusquedaChange(busqueda: string | null){
+        if (!busqueda){
+            this._departamentoService.getAllDepartamentos().subscribe((departamento) => {
+                this.departamentos = departamento;
+            })
+        }else {
+            this._departamentoService.getDepartamentoByName(busqueda).subscribe((departamentos) => {
+                this.departamentos = departamentos;
+            })
+        }
     }
 
 }

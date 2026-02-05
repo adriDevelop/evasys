@@ -1,6 +1,6 @@
 <section class="general-container-departamento">
     <section class="bienvenida-container">
-        <app-barra-busqueda [arrayBotones]="['Añadir departamento', 'Buscar']"></app-barra-busqueda>
+        <app-barra-busqueda (busqueda)="onBusquedaChange($event)" [arrayBotones]="['Añadir departamento']"></app-barra-busqueda>
     </section>
     <section class="departamentos-list-container">
         @for (departamento of departamentos; track $index) {

@@ -12,6 +12,15 @@
         @else if (nombreBoton.toLocaleLowerCase().includes('generar')) {
             <button class="btn btn-light" routerLink="/empleados/generarInforme">{{nombreBoton}}</button>
         }
+        @else if(nombreBoton.includes('departamento')){
+            <button class="btn btn-light" routerLink="/empleados/crearDepartamento">{{nombreBoton}}</button>
+        }
+        @else if(nombreBoton.includes('centro')){
+            <button class="btn btn-light" routerLink="/empleados/crearCentro">{{nombreBoton}}</button>
+        }
+        @else if(nombreBoton.includes('coordinador')){
+            <button class="btn btn-light" routerLink="/empleados/crearCoordinador">{{nombreBoton}}</button>
+        }
     }
   </div>
 </div>
