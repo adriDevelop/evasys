@@ -2,7 +2,7 @@ import { Coordinador } from './Coordinador';
 import { Departamento } from './Departamento';
 
 export interface Auditorias{
-    id_auditoria?: string,
+    id_audicion?: string,
     tipo?: string, 
     expediente: string;
     fecha: string;

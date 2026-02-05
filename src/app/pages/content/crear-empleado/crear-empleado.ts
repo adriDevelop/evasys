@@ -10,6 +10,8 @@ import { CoordinadorService } from '../../../core/services/coordinador-service';
 import { Coordinador } from '../../../core/models/Coordinador';
 import { ErrorService } from '../../../core/services/error-service';
 import { AcceptedService } from '../../../core/services/accepted-service';
+import { ComunicationService } from '../../../core/services/comunication-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-empleado',
@@ -18,6 +20,8 @@ import { AcceptedService } from '../../../core/services/accepted-service';
   styleUrl: './crear-empleado.css',
 })
 export class CrearEmpleado implements OnInit{
+
+    estadoLogin: boolean;
 
     empleado: Empleado;
     departamentos: Array<Departamento>;
@@ -38,10 +42,22 @@ export class CrearEmpleado implements OnInit{
         private _centrosService: CentroService = inject(CentroService),
         private _coordinadorService: CoordinadorService = inject(CoordinadorService),
         private _errorService: ErrorService = inject(ErrorService),
-        private _acceptedService: AcceptedService = inject(AcceptedService)
+        private _acceptedService: AcceptedService = inject(AcceptedService),
+        private _comunicationService: ComunicationService = inject(ComunicationService),
+        private _route: Router = inject(Router),
     ){}
 
     ngOnInit(): void {
+
+        this._comunicationService.estadoLogin$.subscribe({
+            next: (estado) =>{
+                this.estadoLogin = estado;
+            }
+        })
+
+        if(!this.estadoLogin){
+            this._route.navigate(['/']);
+        }
 
         this._departamentosService.getAllDepartamentos().subscribe((d) => {
             this.departamentos = d;

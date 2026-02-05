@@ -13,6 +13,8 @@ import { CentroService } from '../../../core/services/centro-service';
 import { DepartamentoServices } from '../../../core/services/departamento-services';
 import { Colectivo } from '../../../core/models/Colectivo';
 import { AuditelDTO } from '../../../core/Dto/AuditelDto';
+import { ComunicationService } from '../../../core/services/comunication-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-auditel',
@@ -21,6 +23,8 @@ import { AuditelDTO } from '../../../core/Dto/AuditelDto';
   styleUrl: './agregar-auditel.css',
 })
 export class AgregarAuditel implements OnInit{
+
+    estadoLogin: boolean;
 
     // Datos necesarios para mostrar el formulario
     coordinadores: Array<Coordinador>;
@@ -50,11 +54,23 @@ export class AgregarAuditel implements OnInit{
         private _empleadosService: EmpleadosService = inject(EmpleadosService),
         private _acceptedService: AcceptedService = inject(AcceptedService),
         private _errorService: ErrorService = inject(ErrorService),
+        private _comunicationService: ComunicationService = inject(ComunicationService),
+        private _router: Router = inject(Router),
     ){
 
     }
 
     ngOnInit(): void {
+        this._comunicationService.estadoLogin$.subscribe({
+            next: (estado) => {
+                this.estadoLogin = estado;
+            }
+        });
+
+        if (!this.estadoLogin){
+            this._router.navigate(["/"]);
+        }
+
         this._empleadosService.getAllEmpleados().subscribe((e) => {
             this.empleados = e;
         });

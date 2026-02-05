@@ -1,9 +1,11 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { EmpleadosList } from '../../../shared/components/empleados-list/empleados-list';
 import { BarraBusqueda } from '../../../shared/components/barra-busqueda/barra-busqueda';
 import { Empleado } from '../../../core/models/Empleado';
 import { EmpleadosService } from '../../../core/services/empleados-service';
-import { Centro } from '../../../core/models/Centro';
+import { AuthService } from '../../../core/services/auth-service';
+import { ComunicationService } from '../../../core/services/comunication-service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-principal-empleados',
   imports: [EmpleadosList, BarraBusqueda],
@@ -12,20 +14,91 @@ import { Centro } from '../../../core/models/Centro';
 })
 export class PrincipalEmpleados implements OnInit {
 
-  empleados: Array<Empleado>;
+    rolUsuario: string;
+    estadoLogin: boolean;
+    empleados: Array<Empleado>;
 
-  constructor(private _empleadosService: EmpleadosService = inject(EmpleadosService)) {}
+  constructor(
+    private _empleadosService: EmpleadosService = inject(EmpleadosService),
+    private _authService: AuthService = inject(AuthService),
+    private _comunicationService: ComunicationService = inject(ComunicationService),
+    private _router: Router = inject(Router),
+    ) {
+        this.rolUsuario = this._authService.getRolFromPayload();
+    }
 
   ngOnInit(): void {
-    this._empleadosService.getAllEmpleados().subscribe((e) => {
-      this.empleados = e;
-    });
-  }
+        this._comunicationService.estadoLogin$.subscribe({
+            next: (estado) => {
+                this.estadoLogin = estado;
+            }
+        })
+
+        if (this._authService.getRolFromPayload() == 'super-admin'){
+            this.obtenerEmpleados()
+        }else {
+            this.obtenerEmpleadosCoordinador();
+        }
+        
+        if(!this.estadoLogin){
+            this._router.navigate(['/']);
+        }
+
+    }
+
+    onBusquedaChanges(busquedaRecibida: string | null){
+        if (!busquedaRecibida){
+            this.comprobarRolUsuario(this.rolUsuario);
+        }else {
+            this.comprobarRolUsuarioBusqueda(this.rolUsuario, busquedaRecibida);
+            console.log(busquedaRecibida);
+        }
+    }
 
   eliminarEmpleado(id: number){
     this._empleadosService.deleteEmpleadoById(id).subscribe( (e) => {
         this.empleados = this.empleados.filter(e => e.id_empleado !== id );
         console.log('Empleado eliminado correctamente');
     })
+  }
+
+  comprobarRolUsuario(rolUsuario: string){
+    if (rolUsuario == 'super-admin'){
+        this.obtenerEmpleados()
+    }else {
+        this.obtenerEmpleadosCoordinador();
+    }
+  }
+
+  comprobarRolUsuarioBusqueda(rolUsuario: string, busquedaRecibida: string){
+    if (rolUsuario == 'super-admin'){
+        this._empleadosService.getEmpleadoByNombre(busquedaRecibida).subscribe((empleado) => {
+                this.empleados = empleado;
+            })
+    }else {
+        this.obtenerEmpleadosCoordinadorBusqueda(this._authService.getIdFromPayload(), busquedaRecibida);
+    }
+  }
+
+  obtenerEmpleados(): void {
+    this._empleadosService.getAllEmpleados().subscribe((empleados) => {
+        this.empleados = empleados;
+    })
+  }
+
+  obtenerEmpleadosCoordinador() : void {
+    this._empleadosService.getEmpleadosByCoordinador(this._authService.getIdFromPayload()).subscribe((empleados) => {
+        this.empleados = empleados;
+    })
+  }
+
+  obtenerEmpleadosCoordinadorBusqueda(idCoordinador: number, busqueda: string){
+    this._empleadosService.getEmpleadosCoordinadorByNombre(idCoordinador, busqueda).subscribe((empleados) => {
+        this.empleados = empleados;
+    })
+  }
+
+  obtenerEmpleadosBusqueda(empleado: string){
+    console.log(empleado);
   }
 }

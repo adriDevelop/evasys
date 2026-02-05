@@ -21,5 +21,9 @@ export class AuditoriasService {
     createAuditoria(auditoriaDto: AuditelDTO){
         return this._httpService.post<Auditorias>(`${ROUTE_AUDITORIA}`, auditoriaDto);
     }
+
+    getAuditoria(id_auditoria: number): Observable<Auditorias>{
+        return this._httpService.get<Auditorias>(`${ROUTE_AUDITORIA}/${id_auditoria}`);
+    }
   
 }

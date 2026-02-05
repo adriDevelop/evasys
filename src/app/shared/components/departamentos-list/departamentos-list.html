@@ -1,0 +1,9 @@
+<div class="departamentos-container">
+    <div class="datos-departamento">
+        <h3>{{departamento.nombre}}</h3>
+    </div>
+    <div class="botones-container">
+        <button class="btn btn-outline-dark" [routerLink]="['/empleados/editarDepartamento', departamento.id_departamento! ]">Editar</button>
+        <button class="btn btn-outline-danger">Dar de baja</button>
+    </div>
+</div>

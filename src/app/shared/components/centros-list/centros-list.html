@@ -1,0 +1,9 @@
+<div class="centros-container">
+    <div class="datos-centro">
+        <h3>{{centro.nombre}}</h3>
+    </div>
+    <div class="botones-container">
+        <button class="btn btn-outline-dark" [routerLink]="['/empleados/editarCentro', centro.id_centro!]">Editar</button>
+        <button class="btn btn-outline-danger">Dar de baja</button>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { ComunicationService } from '../../../core/services/comunication-service';
+import { AuthService } from '../../../core/services/auth-service';
+import { Router } from '@angular/router';
+import { BarraBusqueda } from "../../../shared/components/barra-busqueda/barra-busqueda";
+import { Departamento } from '../../../core/models/Departamento';
+import { DepartamentosList } from "../../../shared/components/departamentos-list/departamentos-list";
+import { CentroService } from '../../../core/services/centro-service';
+import { DepartamentoServices } from '../../../core/services/departamento-services';
+
+@Component({
+  selector: 'app-principal-departamentos',
+  imports: [BarraBusqueda, DepartamentosList],
+  templateUrl: './principal-departamentos.html',
+  styleUrl: './principal-departamentos.css',
+})
+export class PrincipalDepartamentos implements OnInit{
+
+    departamentos: Array<Departamento>;
+    estadoLogin: boolean;
+
+    constructor(
+        private _comunicationService: ComunicationService = inject(ComunicationService),
+        private _authService: AuthService = inject(AuthService),
+        private _router: Router = inject(Router),
+        private _departamentoService: DepartamentoServices = inject(DepartamentoServices)
+    ){
+
+    }
+
+
+    ngOnInit(): void {
+        this._comunicationService.estadoLogin$.subscribe({
+            next: (estado) => {
+                this.estadoLogin = estado;
+            }
+        })
+
+        if(!this.estadoLogin){
+            this._router.navigate(['/']);
+        }
+
+        if(this._authService.getRolFromPayload() != 'super-admin'){
+            this._router.navigate(['/empleados/listadoEmpleados']);
+        }
+
+        this._departamentoService.getAllDepartamentos().subscribe({
+            next: (departamentos) =>{
+                this.departamentos = departamentos;
+            }
+        })
+    }
+
+}

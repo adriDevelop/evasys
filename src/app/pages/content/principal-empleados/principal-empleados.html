@@ -1,6 +1,6 @@
 <section class="general-container-empleados">
     <section class="bienvenida-container">
-        <app-barra-busqueda [arrayBotones]="['Añadir empleado', 'Buscar']"></app-barra-busqueda>
+        <app-barra-busqueda (busqueda)='onBusquedaChanges($event)' [arrayBotones]="['Añadir empleado']"></app-barra-busqueda>
     </section>
     <section class="empleados-list-container">
         @for (empleado of empleados; track $index) {

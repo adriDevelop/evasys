@@ -3,7 +3,7 @@ import { Login } from './pages/content/login/login';
 import { ErrorComponent } from './shared/components/error-component/error-component';
 
 export const routes: Routes = [
-  { path: 'login', component: Login },
+  { path: '', component: Login },
   {
     path: 'empleados',
     loadChildren: () => import('./pages/content/content.routes').then((r) => r.CONTENT_ROUTES)

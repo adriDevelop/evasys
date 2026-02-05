@@ -2,9 +2,17 @@
     <div class="container-datos">
         <h1>Evasys</h1>
         <div class="container-enlaces">
-            <a routerLink="empleados/listadoEmpleados" role="button">Empleados</a>
-            <a routerLink="empleados/listadoAuditeles" role="button">Auditeles</a>
-            <a routerLink="/login">Cerrar sesión</a>
+            @if (estaLogueado && rolUsuario === "admin" || estaLogueado && rolUsuario === "super-admin") {
+                <a routerLink="empleados/listadoEmpleados" role="button">Empleados</a>
+                <a routerLink="empleados/listadoAuditeles" role="button">Auditeles</a>
+                    <!-- De esto se encarga un superAdministrador -->
+                    @if (estaLogueado && rolUsuario === "super-admin") {
+                        <a routerLink="empleados/listadoCoordinadores" role="button">Coordinadores</a>
+                        <a routerLink="empleados/listadoCentros" role="button">Centros</a>
+                        <a routerLink="empleados/listadoDepartamentos" role="button">Departamentos</a>
+                    }
+                <a routerLink="/" (click)="cerrarSesion()">Cerrar sesión</a>
+            }
         </div>
     </div>
 </div>

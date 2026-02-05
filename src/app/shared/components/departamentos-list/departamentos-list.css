@@ -1,0 +1,23 @@
+.departamentos-container{
+    display: grid;
+    align-items: center;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    padding: 0.5rem;
+    width: 30vw;
+    box-shadow: 1px 1px 10px;
+}
+
+.datos-departamento{
+    padding: 1rem;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.botones-container{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}

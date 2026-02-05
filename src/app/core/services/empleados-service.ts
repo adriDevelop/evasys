@@ -15,6 +15,10 @@ export class EmpleadosService {
         return this._httpClient.get<Array<Empleado>>(`${ROUTE_EMPLEADOS}`);
     }
 
+    getEmpleadosByCoordinador(id: number):Observable<Array<Empleado>>{
+        return this._httpClient.get<Array<Empleado>>(`${ROUTE_EMPLEADOS}/${id}`);
+    }
+
     getEmpleadoById(id: number): Observable<Empleado>{
         return this._httpClient.get<Empleado>(`${ROUTE_EMPLEADO}/${id}`);
     }
@@ -25,6 +29,14 @@ export class EmpleadosService {
 
     updateEmpleado(empleado: Empleado): Observable<Empleado>{
         return this._httpClient.put<Empleado>(`${ROUTE_EMPLEADO}`, empleado);
+    }
+
+    getEmpleadoByNombre(nombre: String): Observable<Array<Empleado>>{
+        return this._httpClient.get<Array<Empleado>>(`${ROUTE_EMPLEADO}-nombre/${nombre}`);
+    }
+
+    getEmpleadosCoordinadorByNombre(id: number, busqueda: string): Observable<Array<Empleado>>{
+        return this._httpClient.get<Array<Empleado>>(`${ROUTE_EMPLEADO}-coordinador-nombre/${id}/${busqueda}`);
     }
 
     createEmpleado(idCoordinador: number, idDepartamento: number, empleado: Empleado): Observable<Empleado>{

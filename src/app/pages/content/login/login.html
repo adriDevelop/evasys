@@ -6,19 +6,12 @@
     </section>
     <section class="form-section">
       <div class="form-iniciar-sesion">
-        <form>
+        <form #loginForm="ngForm" (ngSubmit)="loguearse(loginForm.value)">
           <label for="username" class="form-label">Nombre de usuario</label>
-          <input type="text" id="username" class="form-control mb-3" />
+          <input type="text" name="username" id="username" ngModel class="form-control mb-3" />
           <label for="password" class="form-label">Contraseña</label>
-          <input type="password" id="password" class="form-control mb-3" />
-          <label for="department" class="form-label">Departamento</label>
-          <select name="departament" id="department" class="form-select mb-3">
-            <option value="abogados">Abogados</option>
-            <option value="asistencia">Asistencia</option>
-            <option value="arim">Arim</option>
-            <option value="avj">AVJ</option>
-          </select>
-          <button class="btn btn-dark">Iniciar sesión</button>
+          <input type="password" name="password" id="password" ngModel class="form-control mb-3" />
+          <button class="btn btn-dark" type="submit">Iniciar sesión</button>
         </form>
       </div>
     </section>
