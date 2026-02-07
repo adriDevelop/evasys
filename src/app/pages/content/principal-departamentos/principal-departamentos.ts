@@ -1,16 +1,16 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ComunicationService } from '../../../core/services/comunication-service';
 import { AuthService } from '../../../core/services/auth-service';
 import { Router } from '@angular/router';
 import { BarraBusqueda } from "../../../shared/components/barra-busqueda/barra-busqueda";
 import { Departamento } from '../../../core/models/Departamento';
 import { DepartamentosList } from "../../../shared/components/departamentos-list/departamentos-list";
-import { CentroService } from '../../../core/services/centro-service';
 import { DepartamentoServices } from '../../../core/services/departamento-services';
+import { ResolverComponent } from '../../../shared/components/resolver-component/resolver-component';
 
 @Component({
   selector: 'app-principal-departamentos',
-  imports: [BarraBusqueda, DepartamentosList],
+  imports: [BarraBusqueda, DepartamentosList, ResolverComponent],
   templateUrl: './principal-departamentos.html',
   styleUrl: './principal-departamentos.css',
 })

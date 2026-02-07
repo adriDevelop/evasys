@@ -4,7 +4,7 @@
         <h3>{{coordinador.nombre}} {{coordinador.apellidos}}</h3>
     </div>
     <div class="botones-container">
-        <button class="btn btn-outline-dark" [routerLink]="['/empleados/editarCoordinador', coordinador.id_coordinador! ]">Editar</button>
-        <button class="btn btn-outline-danger">Dar de baja</button>
+        <button class="btn btn-outline-dark" [routerLink]="['/empleados/editarCoordinador', coordinador.id_coordinador! ]"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="btn btn-outline-danger"><i class="fa-solid fa-user-xmark"></i></button>
     </div>
 </div>

@@ -1,10 +1,19 @@
 <section class="general-container-coordinador">
-    <section class="bienvenida-container">
-        <app-barra-busqueda [arrayBotones]="['Añadir coordinador', 'Buscar']"></app-barra-busqueda>
-    </section>
-    <section class="coordinadores-list-container">
-        @for (coordinador of coordinadores; track $index) {
-            <app-coordinadores-list [coordinador] = "coordinador"></app-coordinadores-list>
-        }
-    </section>
+  <section class="bienvenida-container">
+    <app-barra-busqueda
+      (busqueda)="onBusquedaChanges($event)"
+      [arrayBotones]="['Añadir coordinador']"
+    ></app-barra-busqueda>
+  </section>
+  @if(!coordinadores){
+  <section class="carga">
+    <app-resolver-component></app-resolver-component>
+  </section>
+  }@else{
+  <section class="coordinadores-list-container">
+    @for (coordinador of coordinadores; track $index) {
+    <app-coordinadores-list [coordinador]="coordinador"></app-coordinadores-list>
+    }
+  </section>
+  }
 </section>

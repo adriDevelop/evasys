@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { EmpleadosList } from '../../../shared/components/empleados-list/empleados-list';
 import { BarraBusqueda } from '../../../shared/components/barra-busqueda/barra-busqueda';
 import { Empleado } from '../../../core/models/Empleado';
@@ -6,9 +6,10 @@ import { EmpleadosService } from '../../../core/services/empleados-service';
 import { AuthService } from '../../../core/services/auth-service';
 import { ComunicationService } from '../../../core/services/comunication-service';
 import { Router } from '@angular/router';
+import { ResolverComponent } from '../../../shared/components/resolver-component/resolver-component';
 @Component({
   selector: 'app-principal-empleados',
-  imports: [EmpleadosList, BarraBusqueda],
+  imports: [EmpleadosList, BarraBusqueda, ResolverComponent],
   templateUrl: './principal-empleados.html',
   styleUrl: './principal-empleados.css',
 })
@@ -17,6 +18,7 @@ export class PrincipalEmpleados implements OnInit {
     rolUsuario: string;
     estadoLogin: boolean;
     empleados: Array<Empleado>;
+    carga: boolean;
 
   constructor(
     private _empleadosService: EmpleadosService = inject(EmpleadosService),
@@ -28,6 +30,7 @@ export class PrincipalEmpleados implements OnInit {
     }
 
   ngOnInit(): void {
+
         this._comunicationService.estadoLogin$.subscribe({
             next: (estado) => {
                 this.estadoLogin = estado;
@@ -73,17 +76,23 @@ export class PrincipalEmpleados implements OnInit {
   comprobarRolUsuarioBusqueda(rolUsuario: string, busquedaRecibida: string){
     if (rolUsuario == 'super-admin'){
         this._empleadosService.getEmpleadoByNombre(busquedaRecibida).subscribe((empleado) => {
-                this.empleados = empleado;
-            })
+            this.empleados = empleado;
+        })
+
+        this.carga = false;
     }else {
         this.obtenerEmpleadosCoordinadorBusqueda(this._authService.getIdFromPayload(), busquedaRecibida);
     }
   }
 
   obtenerEmpleados(): void {
+
+    this.carga = true;
     this._empleadosService.getAllEmpleados().subscribe((empleados) => {
         this.empleados = empleados;
+        this.carga = false;
     })
+
   }
 
   obtenerEmpleadosCoordinador() : void {

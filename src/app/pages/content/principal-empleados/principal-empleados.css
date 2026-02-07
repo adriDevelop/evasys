@@ -13,3 +13,11 @@
     margin-top: 2rem;
     gap: 2rem;
 }
+
+.carga{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 100vw;
+}

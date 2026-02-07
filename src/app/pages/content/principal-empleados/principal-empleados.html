@@ -1,10 +1,22 @@
 <section class="general-container-empleados">
-    <section class="bienvenida-container">
-        <app-barra-busqueda (busqueda)='onBusquedaChanges($event)' [arrayBotones]="['Añadir empleado']"></app-barra-busqueda>
-    </section>
-    <section class="empleados-list-container">
-        @for (empleado of empleados; track $index) {
-            <app-empleados-list [empleado]= empleado (borrarEmpleado)="eliminarEmpleado($event)"></app-empleados-list>
-        }
-    </section>
+  <section class="bienvenida-container">
+    <app-barra-busqueda
+      (busqueda)="onBusquedaChanges($event)"
+      [arrayBotones]="['Añadir empleado']"
+    ></app-barra-busqueda>
+  </section>
+  @if(carga){
+  <section class="carga">
+    <app-resolver-component></app-resolver-component>
+  </section>
+  }@else{
+  <section class="empleados-list-container">
+    @for (empleado of empleados; track $index) {
+    <app-empleados-list
+      [empleado]="empleado"
+      (borrarEmpleado)="eliminarEmpleado($event)"
+    ></app-empleados-list>
+    }
+  </section>
+  }
 </section>

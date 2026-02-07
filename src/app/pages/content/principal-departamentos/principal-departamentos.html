@@ -2,9 +2,15 @@
     <section class="bienvenida-container">
         <app-barra-busqueda (busqueda)="onBusquedaChange($event)" [arrayBotones]="['Añadir departamento']"></app-barra-busqueda>
     </section>
-    <section class="departamentos-list-container">
-        @for (departamento of departamentos; track $index) {
-            <app-departamentos-list [departamento] = "departamento"></app-departamentos-list>
-        }
-    </section>
+    @if(!departamentos){
+        <section class="carga">
+            <app-resolver-component></app-resolver-component>
+        </section>
+    }@else{
+        <section class="departamentos-list-container">
+            @for (departamento of departamentos; track $index) {
+                <app-departamentos-list [departamento] = "departamento"></app-departamentos-list>
+            }
+        </section>
+    }
 </section>

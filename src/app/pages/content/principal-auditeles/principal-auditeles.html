@@ -1,10 +1,16 @@
-<section class="general-container-auditeles">
-    <section class="bienvenida-container">
-        <app-barra-busqueda [arrayBotones]="['Añadir auditel', 'Generar informe', 'Buscar']"></app-barra-busqueda>
+@if(!auditorias){
+    <section class="carga">
+        <app-resolver-component></app-resolver-component>
     </section>
-    <section class="auditeles-list-container">
-        @for (auditoria of auditorias; track $index) {
-            <app-auditeles-list [auditoriaObject] = "auditoria"></app-auditeles-list>
-        }
+}@else{
+    <section class="general-container-auditeles">
+        <section class="bienvenida-container">
+            <app-barra-busqueda [arrayBotones]="['Añadir auditel', 'Generar informe', 'Buscar']"></app-barra-busqueda>
+        </section>
+        <section class="auditeles-list-container">
+            @for (auditoria of auditorias; track $index) {
+                <app-auditeles-list [auditoriaObject] = "auditoria"></app-auditeles-list>
+            }
+        </section>
     </section>
-</section>
+}

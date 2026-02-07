@@ -1,10 +1,19 @@
 <section class="general-container-centros">
-    <section class="bienvenida-container">
-        <app-barra-busqueda [arrayBotones]="['Añadir centro', 'Buscar']"></app-barra-busqueda>
-    </section>
-    <section class="centros-list-container">
-        @for (centro of centros; track $index) {
-            <app-centros-list [centro]="centro"></app-centros-list>
-        }
-    </section>
+  <section class="bienvenida-container">
+    <app-barra-busqueda
+      (busqueda)="onBusquedaChange($event)"
+      [arrayBotones]="['Añadir centro', 'Buscar']"
+    ></app-barra-busqueda>
+  </section>
+  @if(!centros){
+  <section class="carga">
+    <app-resolver-component></app-resolver-component>
+  </section>
+  } @else {
+  <section class="centros-list-container">
+    @for (centro of centros; track $index) {
+    <app-centros-list [centro]="centro"></app-centros-list>
+    }
+  </section>
+  }
 </section>

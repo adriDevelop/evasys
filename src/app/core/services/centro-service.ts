@@ -22,5 +22,9 @@ export class CentroService {
     getCentroDepartamento(id: number): Observable<Centro>{
         return this._httpClient.get<Centro>(`${ROUTE_DEPARTAMENTO}/departamento/centro/${id}`);
     }
+
+    getCentroByNombre(nombre: string): Observable<Array<Centro>>{
+        return this._httpClient.get<Array<Centro>>(`${ROUTE_CENTRO}-nombre/${nombre}`);
+    }
   
 }

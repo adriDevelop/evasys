@@ -8,19 +8,26 @@ import { ROUTE_COORDINADOR, ROUTE_COORDINADORES } from '../environments/globals'
   providedIn: 'root',
 })
 export class CoordinadorService {
+  private _httpClient: HttpClient = inject(HttpClient);
 
-    private _httpClient: HttpClient = inject(HttpClient);
+  getCoordinadoresDepartamentoCentral(
+    idDepartamento: number,
+    idCentro: number
+  ): Observable<Array<Coordinador>> {
+    return this._httpClient.get<Array<Coordinador>>(
+      `${ROUTE_COORDINADOR}/${idDepartamento}/${idCentro}`
+    );
+  }
 
-    getCoordinadoresDepartamentoCentral(idDepartamento: number, idCentro: number): Observable<Array<Coordinador>>{
-        return this._httpClient.get<Array<Coordinador>>(`${ROUTE_COORDINADOR}/${idDepartamento}/${idCentro}`);
-    }
+  getCoordinadorById(id_coordinador: number): Observable<Coordinador> {
+    return this._httpClient.get<Coordinador>(`${ROUTE_COORDINADOR}/${id_coordinador}`);
+  }
 
-    getCoordinadorById(id_coordinador: number): Observable<Coordinador>{
-        return this._httpClient.get<Coordinador>(`${ROUTE_COORDINADOR}/${id_coordinador}`);
-    }
+  getAllCoordinadores(): Observable<Array<Coordinador>> {
+    return this._httpClient.get<Array<Coordinador>>(`${ROUTE_COORDINADORES}`);
+  }
 
-    getAllCoordinadores():Observable<Array<Coordinador>>{
-        return this._httpClient.get<Array<Coordinador>>(`${ROUTE_COORDINADORES}`);
-    }
-  
+  getCoordinadorByNombre(nombre: string): Observable<Array<Coordinador>> {
+    return this._httpClient.get<Array<Coordinador>>(`${ROUTE_COORDINADORES}-nombre/${nombre}`);
+  }
 }

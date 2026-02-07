@@ -60,3 +60,6 @@ html, body{
     font-style: normal;
     background-color: #2F6690;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -5,10 +5,11 @@ import { AuditoriasService } from '../../../core/services/auditorias-service';
 import { Auditorias } from '../../../core/models/Auditorias';
 import { ComunicationService } from '../../../core/services/comunication-service';
 import { Router } from '@angular/router';
+import { ResolverComponent } from '../../../shared/components/resolver-component/resolver-component';
 
 @Component({
   selector: 'app-principal-auditeles',
-  imports: [BarraBusqueda, AuditelesList],
+  imports: [BarraBusqueda, AuditelesList, ResolverComponent],
   templateUrl: './principal-auditeles.html',
   styleUrl: './principal-auditeles.css',
 })

@@ -6,10 +6,11 @@ import { CoordinadoresList } from "../../../shared/components/coordinadores-list
 import { Coordinador } from '../../../core/models/Coordinador';
 import { BarraBusqueda } from '../../../shared/components/barra-busqueda/barra-busqueda';
 import { CoordinadorService } from '../../../core/services/coordinador-service';
+import { ResolverComponent } from '../../../shared/components/resolver-component/resolver-component';
 
 @Component({
   selector: 'app-principal-coordinador',
-  imports: [BarraBusqueda, CoordinadoresList],
+  imports: [BarraBusqueda, CoordinadoresList, ResolverComponent],
   templateUrl: './principal-coordinador.html',
   styleUrl: './principal-coordinador.css',
 })
@@ -49,6 +50,18 @@ export class PrincipalCoordinador implements OnInit{
                 this.coordinadores = coordinadores;
             }
         })
+    }
+
+    onBusquedaChanges(busquedaRecibida: string | null){
+        if (!busquedaRecibida){
+            this._coordinadorService.getAllCoordinadores().subscribe((coordinadores) => {
+                this.coordinadores = coordinadores;
+            })
+        }else {
+            this._coordinadorService.getCoordinadorByNombre(busquedaRecibida).subscribe((coordinadores) => {
+                this.coordinadores = coordinadores;
+            })
+        }
     }
 
 }
