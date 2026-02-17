@@ -1,4 +1,17 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
-<app-card-message-error></app-card-message-error>
-<app-card-accepted></app-card-accepted>
+<div class="general-container">
+    @if(estadoLogin){
+        <div class="header-container">
+            <app-header></app-header>
+        </div>
+    }
+    <div [ngClass]="{'content-container': estadoLogin, 'content-container-login': !estadoLogin}">
+        <video autoplay muted loop playsinline class="back-video">
+            <source src="videos/krumzi-video.mp4" type="video/mp4">
+        </video>
+        <div class="content">
+            <router-outlet></router-outlet>
+            <app-card-message-error></app-card-message-error>
+            <app-card-accepted></app-card-accepted>
+        </div>
+    </div>
+</div>

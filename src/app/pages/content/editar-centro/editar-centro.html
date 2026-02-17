@@ -1,9 +1,9 @@
 <section class="general-container-centros">
   <section class="title">
-    <p class="title-name">Crear centro</p>
+    <p class="title-name">Editar centro</p>
   </section>
   <section class="datos-centro">
-    <form [formGroup]="formControl">
+    <form [formGroup]="formControl" action="">
       <div class="row g-2">
         <div class="col-md">
           <label for="nombre" class="form-label">Nombre</label>
@@ -30,18 +30,18 @@
             formControlName="id_departamento"
             name="departamento"
           >
-            @for (departamento of departamentos; track $index) {
-            <option [value]="departamento.id_departamento">{{departamento.nombre}}</option>
+            @for (departamento of todosDepartamentos; track $index) {
+                <option [value]="departamento.id_departamento">{{departamento.nombre}}</option>
             }
-        </select>
+          </select>
         </div>
         <section class="beans">
-            @for (departamento of departamentosAgregados.controls; track $index) {
+            @for(departamento of departamentos.controls; track $index){
                 <app-beans [departamento]="departamento.value" (eliminarDepartamento)="eliminarDepartamento($event)"></app-beans>
             }
         </section>
       </div>
-      <button class="btn btn-dark" (click)="agregarCentro(formControl)">Crear</button>
+      <button class="btn btn-dark" (click)="editarCentro(idCentro!, formControl)">Editar</button>
     </form>
   </section>
 </section>

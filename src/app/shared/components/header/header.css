@@ -1,27 +1,81 @@
-.container-cabecera{
-    display: flex;
-    align-items: center;
-    background-color: white;
-    justify-content: space-between;
+.container-cabecera {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+  border-top-right-radius: 1rem;
+  box-shadow: 1px 1px 10px;
 }
 
-.container-datos{
-    display: flex;
-    justify-content: space-between;
-    padding: 2rem;
-    width: 100vw;
+.container-datos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.container-enlaces{
-    display: flex;
-    gap: 2rem;
+.container-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
-.container-enlaces a{
-    text-decoration: none;
-    color: black;
+mat-divider {
+  width: 10rem;
 }
 
-.container-enlaces a:hover{
-    color:#2F6690;
+mat-list-item {
+  text-align: start;
+}
+
+.container-enlaces {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container-enlaces button {
+  display: flex;
+  justify-content: center;
+}
+
+.container-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.container-enlaces a {
+  text-decoration: none;
+  color: black;
+}
+
+.container-enlaces a:hover {
+  color: #2f6690;
+}
+
+.container-logout {
+  display: flex;
+  padding-bottom: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  background-color: white;
+  border: none;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+}
+
+.userImage {
+  background-image: url('https://material.angular.dev/assets/img/examples/shiba1.jpg');
+  background-size: cover;
 }

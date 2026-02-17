@@ -96,8 +96,12 @@ export class PrincipalEmpleados implements OnInit {
   }
 
   obtenerEmpleadosCoordinador() : void {
+    this.carga = true;
+
     this._empleadosService.getEmpleadosByCoordinador(this._authService.getIdFromPayload()).subscribe((empleados) => {
         this.empleados = empleados;
+        this.carga = false;
+
     })
   }
 

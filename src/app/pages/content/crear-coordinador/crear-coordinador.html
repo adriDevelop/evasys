@@ -1,1 +1,85 @@
-<p>crear-coordinador works!</p>
+<section class="general-container-centros">
+  <section class="title">
+    <p class="title-name">Editar centro</p>
+  </section>
+  <section class="datos-centro">
+    <form [formGroup]="formControl" action="">
+      <div class="row g-2">
+        <div class="col-md">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" id="nombre" class="form-control" formControlName="nombre" name="nombre" />
+        </div>
+        <div class="col-md">
+          <label for="apellidos" class="form-label">Apellidos</label>
+          <input
+            type="text"
+            id="apellidos"
+            class="form-control"
+            formControlName="apellidos"
+            name="apellidos"
+          />
+        </div>
+        <div class="col-md">
+          <label for="usuario" class="form-label">Usuario</label>
+          <input
+            type="text"
+            id="usuario"
+            class="form-control"
+            formControlName="usuario"
+            name="usuario"
+          />
+        </div>
+      </div>
+      <div class="row g-2">
+      <div class="col-md">
+          <label for="rol" class="form-label">Rol</label>
+          <input type="text" id="rol" class="form-control" formControlName="rol" name="rol" />
+        </div>
+        <div class="col-md">
+          <label for="departamento" class="form-label">Departamento</label>
+          <input
+            type="text"
+            id="departamento"
+            class="form-control"
+            formControlName="departamento"
+            name="departamento"
+          />
+        </div>
+        <div class="col-md">
+          <label for="centro" class="form-label">Centro</label>
+          <input
+            type="text"
+            id="centro"
+            class="form-control"
+            formControlName="centro"
+            name="centro"
+          />
+        </div>
+        </div>
+      <div class="row g-2">
+        <div class="col-md">
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>Empleados</mat-expansion-panel-header>
+                <table mat-table [dataSource]="empleados.controls" class="mat-elevation-z8">
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                        <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef>Usuario</th>
+                        <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+                    </ng-container>
+                </table>
+          </mat-expansion-panel>
+        </div>
+      </div>
+      <button class="btn btn-dark">Editar</button>
+    </form>
+  </section>
+</section>

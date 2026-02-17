@@ -3,16 +3,20 @@ import { RouterLink } from '@angular/router';
 import { ComunicationService } from '../../../core/services/comunication-service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../core/services/auth-service';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list'
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [RouterLink, MatCardModule, MatDividerModule, MatListModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header implements OnInit, OnDestroy{
 
     rolUsuario: string;
+    nombreCoordinador: string;
+    usuarioCoordinador: string;
     estaLogueado: boolean;
     subscripcion: Subscription;
 
@@ -26,8 +30,7 @@ export class Header implements OnInit, OnDestroy{
             next: (estado) => {
                 this.estaLogueado = estado;
                 this.rolUsuario = this._authService.getRolFromPayload();
-                console.log(this.estaLogueado);
-                console.log(this.rolUsuario);
+                this.nombreCoordinador = this._authService.getUsernameFromPayload();
             } 
         })
     }

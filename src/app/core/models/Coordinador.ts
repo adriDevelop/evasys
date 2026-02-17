@@ -1,3 +1,4 @@
+import { Centro } from './Centro';
 import { Departamento } from './Departamento';
 
 export interface Coordinador{
@@ -8,6 +9,7 @@ export interface Coordinador{
         usuario: string,
         password: string,
         activo: number,
+        centro: Centro,
         rol?: string,
         departamento: Departamento
 }

@@ -1,18 +1,48 @@
 <div class="container-cabecera">
-    <div class="container-datos">
+  <div class="container-datos">
+    @if (estaLogueado && rolUsuario === "admin" || estaLogueado && rolUsuario === "super-admin") {
+    <div class="container-data">
+      <div class="container-title">
         <h1>Evasys</h1>
-        <div class="container-enlaces">
-            @if (estaLogueado && rolUsuario === "admin" || estaLogueado && rolUsuario === "super-admin") {
-                <a routerLink="empleados/listadoEmpleados" role="button">Empleados</a>
-                <a routerLink="empleados/listadoAuditeles" role="button">Auditeles</a>
-                    <!-- De esto se encarga un superAdministrador -->
-                    @if (estaLogueado && rolUsuario === "super-admin") {
-                        <a routerLink="empleados/listadoCoordinadores" role="button">Coordinadores</a>
-                        <a routerLink="empleados/listadoCentros" role="button">Centros</a>
-                        <a routerLink="empleados/listadoDepartamentos" role="button">Departamentos</a>
-                    }
-                <a routerLink="/" (click)="cerrarSesion()">Cerrar sesión</a>
-            }
-        </div>
+      </div>
+      <div class="container-enlaces">
+        <mat-list>
+          <mat-divider width="100"></mat-divider>
+          <mat-list-item
+            ><a routerLink="empleados/listadoEmpleados" role="button">Empleados</a></mat-list-item
+          >
+          <mat-divider></mat-divider>
+          <mat-list-item
+            ><a routerLink="empleados/listadoAuditeles" role="button">Auditeles</a></mat-list-item
+          >
+          <mat-divider></mat-divider>
+          <!-- De esto se encarga un superAdministrador -->
+          @if (estaLogueado && rolUsuario === "super-admin") {
+          <mat-list-item
+            ><a routerLink="empleados/listadoCoordinadores" role="button"
+              >Coordinadores</a
+            ></mat-list-item
+          >
+          <mat-divider></mat-divider>
+          <mat-list-item
+            ><a routerLink="empleados/listadoCentros" role="button">Centros</a></mat-list-item
+          >
+          <mat-divider></mat-divider>
+          <mat-list-item
+            ><a routerLink="empleados/listadoDepartamentos" role="button"
+              >Departamentos</a
+            ></mat-list-item
+          >
+          <mat-divider></mat-divider>
+          }
+        </mat-list>
+      </div>
     </div>
+    <div class="container-logout">
+      <button class="btn btn-outline-danger" routerLink="/" (click)="cerrarSesion()">
+        Cerrar sesión
+      </button>
+    </div>
+    }
+  </div>
 </div>

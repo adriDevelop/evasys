@@ -1,0 +1,44 @@
+.general-container {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+}
+
+.header-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 10%;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.content-container {
+  margin-left: 8vw;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.content-container-login {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.content {
+  padding-left: 3.5rem;
+  z-index: 1;
+}
+
+.back-video {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  object-fit: cover;
+}

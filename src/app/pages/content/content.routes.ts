@@ -8,6 +8,9 @@ import { PrincipalCentros } from './principal-centros/principal-centros';
 import { PrincipalCoordinador } from './principal-coordinador/principal-coordinador';
 import { PrincipalDepartamentos } from './principal-departamentos/principal-departamentos';
 import { EditarDepartamento } from './editar-departamento/editar-departamento';
+import { CrearCentro } from './crear-centro/crear-centro';
+import { EditarCentro } from './editar-centro/editar-centro';
+import { EditarCoordinador } from './editar-coordinador/editar-coordinador';
 
 export const CONTENT_ROUTES = [
     {
@@ -43,11 +46,23 @@ export const CONTENT_ROUTES = [
         component: EditarDepartamento
     },
     {
+        path: 'editarCentro/:id',
+        component: EditarCentro
+    },
+    {
+        path: 'editarCoordinador/:id',
+        component: EditarCoordinador
+    },
+    {
         path: 'agregarEmpleado',
         component: CrearEmpleado
     },
     {
         path: 'agregarAuditel',
         component: AgregarAuditel
+    },
+    {
+        path: 'crearCentro',
+        component: CrearCentro
     }
 ]
