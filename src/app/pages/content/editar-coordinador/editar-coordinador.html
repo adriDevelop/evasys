@@ -1,111 +1,129 @@
 <section class="general-container-coordinador">
-  <section class="title">
-    <p class="title-name">Editar centro</p>
-  </section>
-  <section class="datos-coordinador">
-    <form [formGroup]="formControl" action="">
-      <div class="row g-2">
-        <div class="col-md">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" id="nombre" class="form-control" formControlName="nombre" name="nombre" />
+  <section class="content">
+    <section class="title">
+      <button
+        matButton="elevated"
+        matTooltip="Volver a coordinadores"
+        class="title-name"
+        [routerLink]="['/empleados/listadoCoordinadores']"
+      >
+        <i class="fa-solid fa-angle-left"></i>Coordinadores/Editar coordinador
+      </button>
+    </section>
+    <section class="datos-coordinador">
+      <form [formGroup]="formControl" action="">
+        <div class="row g-2">
+          <div class="col-md">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              class="form-control"
+              formControlName="nombre"
+              name="nombre"
+            />
+          </div>
+          <div class="col-md">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input
+              type="text"
+              id="apellidos"
+              class="form-control"
+              formControlName="apellidos"
+              name="apellidos"
+            />
+          </div>
+          <div class="col-md">
+            <label for="usuario" class="form-label">Usuario</label>
+            <input
+              type="text"
+              id="usuario"
+              class="form-control"
+              formControlName="usuario"
+              name="usuario"
+            />
+          </div>
         </div>
-        <div class="col-md">
-          <label for="apellidos" class="form-label">Apellidos</label>
-          <input
-            type="text"
-            id="apellidos"
-            class="form-control"
-            formControlName="apellidos"
-            name="apellidos"
-          />
-        </div>
-        <div class="col-md">
-          <label for="usuario" class="form-label">Usuario</label>
-          <input
-            type="text"
-            id="usuario"
-            class="form-control"
-            formControlName="usuario"
-            name="usuario"
-          />
-        </div>
-      </div>
-      <div class="row g-2">
-      <div class="col-md">
-          <label for="rol" class="form-label">Rol</label>
-          <input type="text" id="rol" class="form-control" formControlName="rol" name="rol" readonly>
-        </div>
-        <div class="col-md">
-          <label for="departamento" class="form-label">Departamento</label>
-          <select
-            type="text"
-            id="departamento"
-            class="form-control"
-            formControlName="departamento"
-            name="departamento"
+        <div class="row g-2">
+          <div class="col-md">
+            <label for="rol" class="form-label">Rol</label>
+            <input
+              type="text"
+              id="rol"
+              class="form-control"
+              formControlName="rol"
+              name="rol"
+              readonly
+            />
+          </div>
+          <div class="col-md">
+            <label for="departamento" class="form-label">Departamento</label>
+            <select
+              type="text"
+              id="departamento"
+              class="form-control"
+              formControlName="departamento"
+              name="departamento"
             >
-            @for (departamento of departamentos; track $index) {
-                <option [value]="departamento.id_departamento">{{ departamento.nombre }}</option>
-            }
-        </select>
+              @for (departamento of departamentos; track $index) {
+              <option [value]="departamento.id_departamento">{{ departamento.nombre }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-md">
+            <label for="centro" class="form-label">Centro</label>
+            <select
+              type="text"
+              id="centro"
+              class="form-control"
+              formControlName="centro"
+              name="centro"
+            >
+              @for (centro of centros; track $index) {
+              <option [value]="centro.id_centro">{{ centro.nombre }}</option>
+              }
+            </select>
+          </div>
         </div>
-        <div class="col-md">
-          <label for="centro" class="form-label">Centro</label>
-          <select
-            type="text"
-            id="centro"
-            class="form-control"
-            formControlName="centro"
-            name="centro"
-          >
-          @for (centro of centros; track $index) {
-            <option [value]="centro.id_centro">{{ centro.nombre }}</option>
-          }
-          </select>
-        </div>
-        </div>
-      <div class="row g-2">
-        <div class="col-md">
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
+        <div class="row g-2">
+          <div class="col-md">
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
                 <div class="container-header">
-                    <div class="title-header">
-                        Empleados 
-                    </div>
-                    <div class="title-header">
-                        Número de empleados: {{ empleados.length }}
-                    </div>
-                    <div class="buttons-header">
-                        <button class="btn btn-outline-dark">Agregar empleado</button>
-                        <button class="btn btn-outline-danger">Trasladar empleados</button>
-                    </div>
+                  <div class="title-header">Empleados</div>
+                  <div class="title-header">Número de empleados: {{ empleados.length }}</div>
+                  <div class="buttons-header">
+                    <button class="btn btn-outline-dark">Agregar empleado</button>
+                    <button class="btn btn-outline-danger">Trasladar empleados</button>
+                  </div>
                 </div>
-            </mat-expansion-panel-header>
-            @if(empleados.length > 0){
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                    <ng-container matColumnDef="nombre">
-                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-                        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
-                    </ng-container>
+              </mat-expansion-panel-header>
+              @if(empleados.length > 0){
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                  <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="apellidos">
-                        <th mat-header-cell *matHeaderCellDef>Apellidos</th>
-                        <td mat-cell *matCellDef="let element">{{ element.apellidos }}</td>
-                    </ng-container>
+                <ng-container matColumnDef="apellidos">
+                  <th mat-header-cell *matHeaderCellDef>Apellidos</th>
+                  <td mat-cell *matCellDef="let element">{{ element.apellidos }}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="usuario">
-                        <th mat-header-cell *matHeaderCellDef>Email</th>
-                        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-                    </ng-container>
+                <ng-container matColumnDef="usuario">
+                  <th mat-header-cell *matHeaderCellDef>Email</th>
+                  <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+                </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-            }
-          </mat-expansion-panel>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+              }
+            </mat-expansion-panel>
+          </div>
         </div>
-      </div>
-      <button class="btn btn-dark">Editar</button>
-    </form>
+        <button class="btn btn-dark" (click)="editarCoordinador(formControl)">Editar</button>
+      </form>
+    </section>
   </section>
 </section>

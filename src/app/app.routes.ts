@@ -6,9 +6,7 @@ export const routes: Routes = [
   { path: '', component: Login },
   {
     path: 'empleados',
-    loadChildren: () => import('./pages/content/content.routes').then((r) => r.CONTENT_ROUTES)
+    loadChildren: () => import('./pages/content/content.routes').then((r) => r.CONTENT_ROUTES),
   },
-  { path: '**',
-    component: ErrorComponent
-   },
+  { path: '**', component: ErrorComponent },
 ];

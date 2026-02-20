@@ -7,38 +7,39 @@
       </div>
       <div class="container-enlaces">
         <mat-list>
-          <mat-divider width="100"></mat-divider>
           <mat-list-item
-            ><a routerLink="empleados/listadoEmpleados" role="button">Empleados</a></mat-list-item
+            ><a routerLink="empleados/listadoEmpleados" role="button"
+              ><i class="fa-solid fa-users"></i> Empleados</a
+            ></mat-list-item
           >
-          <mat-divider></mat-divider>
           <mat-list-item
-            ><a routerLink="empleados/listadoAuditeles" role="button">Auditeles</a></mat-list-item
+            ><a routerLink="empleados/listadoAuditeles" role="button"
+              ><i class="fa-solid fa-headset"></i> Auditeles</a
+            ></mat-list-item
           >
-          <mat-divider></mat-divider>
           <!-- De esto se encarga un superAdministrador -->
           @if (estaLogueado && rolUsuario === "super-admin") {
           <mat-list-item
             ><a routerLink="empleados/listadoCoordinadores" role="button"
-              >Coordinadores</a
+              ><i class="fa-solid fa-users-gear"></i> Coordinadores</a
             ></mat-list-item
           >
-          <mat-divider></mat-divider>
           <mat-list-item
-            ><a routerLink="empleados/listadoCentros" role="button">Centros</a></mat-list-item
+            ><a routerLink="empleados/listadoCentros" role="button"
+              ><i class="fa-solid fa-building"></i> Centros</a
+            ></mat-list-item
           >
-          <mat-divider></mat-divider>
           <mat-list-item
             ><a routerLink="empleados/listadoDepartamentos" role="button"
-              >Departamentos</a
+              ><i class="fa-solid fa-map-pin"></i> Departamentos</a
             ></mat-list-item
           >
-          <mat-divider></mat-divider>
           }
         </mat-list>
       </div>
     </div>
     <div class="container-logout">
+      <h1>@{{ nombreCoordinador }}</h1>
       <button class="btn btn-outline-danger" routerLink="/" (click)="cerrarSesion()">
         Cerrar sesión
       </button>

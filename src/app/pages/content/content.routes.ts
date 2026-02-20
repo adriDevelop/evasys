@@ -11,58 +11,68 @@ import { EditarDepartamento } from './editar-departamento/editar-departamento';
 import { CrearCentro } from './crear-centro/crear-centro';
 import { EditarCentro } from './editar-centro/editar-centro';
 import { EditarCoordinador } from './editar-coordinador/editar-coordinador';
+import { CrearCoordinador } from './crear-coordinador/crear-coordinador';
+import { CrearDepartamento } from './crear-departamento/crear-departamento';
 
 export const CONTENT_ROUTES = [
-    {
-        path: 'listadoEmpleados',
-        component: PrincipalEmpleados
-    },
-    {
-        path: 'listadoAuditeles',
-        component: PrincipalAuditeles
-    },
-    {
-        path: 'listadoCentros',
-        component: PrincipalCentros
-    },
-    {
-        path: 'listadoCoordinadores',
-        component: PrincipalCoordinador
-    },
-    {
-        path: 'listadoDepartamentos',
-        component: PrincipalDepartamentos
-    },
-    {
-        path: 'editarEmpleado/:id',
-        component: EditarEmpleado
-    },
-    {
-        path: 'editarAuditel/:id',
-        component: EditarAuditelEmpleado
-    },
-    {
-        path: 'editarDepartamento/:id',
-        component: EditarDepartamento
-    },
-    {
-        path: 'editarCentro/:id',
-        component: EditarCentro
-    },
-    {
-        path: 'editarCoordinador/:id',
-        component: EditarCoordinador
-    },
-    {
-        path: 'agregarEmpleado',
-        component: CrearEmpleado
-    },
-    {
-        path: 'agregarAuditel',
-        component: AgregarAuditel
-    },
-    {
-        path: 'crearCentro',
-        component: CrearCentro
-    }
-]
+  {
+    path: 'listadoEmpleados',
+    component: PrincipalEmpleados,
+  },
+  {
+    path: 'listadoAuditeles',
+    component: PrincipalAuditeles,
+  },
+  {
+    path: 'listadoCentros',
+    component: PrincipalCentros,
+  },
+  {
+    path: 'listadoCoordinadores',
+    component: PrincipalCoordinador,
+  },
+  {
+    path: 'listadoDepartamentos',
+    component: PrincipalDepartamentos,
+  },
+  {
+    path: 'editarEmpleado/:id',
+    component: EditarEmpleado,
+  },
+  {
+    path: 'editarAuditel/:id',
+    component: EditarAuditelEmpleado,
+  },
+  {
+    path: 'editarDepartamento/:id',
+    component: EditarDepartamento,
+  },
+  {
+    path: 'editarCentro/:id',
+    component: EditarCentro,
+  },
+  {
+    path: 'editarCoordinador/:id',
+    component: EditarCoordinador,
+  },
+  {
+    path: 'agregarEmpleado',
+    component: CrearEmpleado,
+  },
+  {
+    path: 'crearDepartamento',
+    component: CrearDepartamento,
+  },
+  {
+    path: 'agregarAuditel',
+    component: AgregarAuditel,
+  },
+  {
+    path: 'crearCentro',
+    component: CrearCentro,
+  },
+  {
+    path: 'crearCoordinador',
+    component: CrearCoordinador,
+  },
+];

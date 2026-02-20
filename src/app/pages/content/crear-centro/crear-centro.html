@@ -1,47 +1,65 @@
 <section class="general-container-centros">
-  <section class="title">
-    <p class="title-name">Crear centro</p>
-  </section>
-  <section class="datos-centro">
-    <form [formGroup]="formControl">
-      <div class="row g-2">
-        <div class="col-md">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" id="nombre" class="form-control" formControlName="nombre" name="nombre" />
+  <section class="content">
+    <section class="title">
+      <button
+        matButton="elevated"
+        matTooltip="Volver a coordinadores"
+        class="title-name"
+        [routerLink]="['/empleados/listadoCentros']"
+      >
+        <i class="fa-solid fa-angle-left"></i>Centros/Editar centro
+      </button>
+    </section>
+    <section class="datos-centro">
+      <form [formGroup]="formControl">
+        <div class="row g-2">
+          <div class="col-md">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              class="form-control"
+              formControlName="nombre"
+              name="nombre"
+            />
+          </div>
+          <div class="col-md">
+            <label for="localizacion" class="form-label">Localización</label>
+            <input
+              type="text"
+              id="localizacion"
+              class="form-control"
+              formControlName="localizacion"
+              name="localizacion"
+            />
+          </div>
         </div>
-        <div class="col-md">
-          <label for="localizacion" class="form-label">Localización</label>
-          <input
-            type="text"
-            id="localizacion"
-            class="form-control"
-            formControlName="localizacion"
-            name="localizacion"
-          />
-        </div>
-      </div>
-      <div class="row g-2">
-        <div class="col-md">
-          <label for="departamento" class="form-label">Departamento</label>
-          <select
-            tpye="text"
-            id="departamento"
-            class="form-control"
-            formControlName="id_departamento"
-            name="departamento"
-          >
-            @for (departamento of departamentos; track $index) {
-            <option [value]="departamento.id_departamento">{{departamento.nombre}}</option>
-            }
-        </select>
-        </div>
-        <section class="beans">
+        <div class="row g-2">
+          <div class="col-md">
+            <label for="departamento" class="form-label">Departamento</label>
+            <select
+              tpye="text"
+              id="departamento"
+              class="form-control"
+              formControlName="id_departamento"
+              name="departamento"
+            >
+              @for (departamento of departamentos; track $index) {
+              <option [value]="departamento.id_departamento">{{ departamento.nombre }}</option>
+              }
+            </select>
+          </div>
+          <section class="beans">
             @for (departamento of departamentosAgregados.controls; track $index) {
-                <app-beans [departamento]="departamento.value" (eliminarDepartamento)="eliminarDepartamento($event)"></app-beans>
+            <app-beans
+              [departamento]="departamento.value"
+              (eliminarDepartamento)="eliminarDepartamento($event)"
+            ></app-beans>
             }
-        </section>
-      </div>
-      <button class="btn btn-dark" (click)="agregarCentro(formControl)">Crear</button>
-    </form>
+          </section>
+        </div>
+        <button class="btn btn-dark" (click)="agregarCentro(formControl)">Crear</button>
+      </form>
+    </section>
   </section>
 </section>

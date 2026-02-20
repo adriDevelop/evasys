@@ -1,69 +1,111 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatTable, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatCell, MatCellDef } from '@angular/material/table';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatCell,
+  MatCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRowDef,
+} from '@angular/material/table';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CoordinadorService } from '../../../core/services/coordinador-service';
-import { ActivatedRoute } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { EmpleadosService } from '../../../core/services/empleados-service';
 import { Coordinador } from '../../../core/models/Coordinador';
+import { Departamento } from '../../../core/models/Departamento';
+import { Centro } from '../../../core/models/Centro';
+import { Empleado } from '../../../core/models/Empleado';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CentroService } from '../../../core/services/centro-service';
+import { DepartamentoServices } from '../../../core/services/departamento-services';
+import { CoordinadorCentroDTO } from '../../../core/Dto/CoordinadorCentroDTO';
 
 @Component({
   selector: 'app-crear-coordinador',
-  imports: [ReactiveFormsModule, MatExpansionModule, MatTable, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatCell, MatCellDef],
+  imports: [
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatCell,
+    MatCellDef,
+    RouterLink,
+    MatButtonModule,
+    MatTooltipModule,
+  ],
   templateUrl: './crear-coordinador.html',
   styleUrl: './crear-coordinador.css',
 })
-export class CrearCoordinador implements OnInit{
+export class CrearCoordinador implements OnInit {
+  idCoordinador: number;
+  coordinador: Coordinador;
+  departamentos: Array<Departamento>;
+  centros: Array<Centro>;
+  dataSource: Empleado[] = [];
+  displayedColumns: Array<string> = ['nombre', 'apellidos', 'usuario'];
 
-    idCoordinador: number;
-    coordinador: Coordinador;
+  formControl: FormGroup = new FormGroup({
+    idrrhh: new FormControl(''),
+    nombre: new FormControl(''),
+    apellidos: new FormControl(''),
+    usuario: new FormControl(''),
+    password: new FormControl(''),
+    rol: new FormControl(''),
+    departamento: new FormControl(0),
+    centro: new FormControl(0),
+  });
 
-    formControl: FormGroup = new FormGroup({
-        nombre: new FormControl(''),
-        apellidos: new FormControl(''),
-        usuario: new FormControl(''),
-        rol: new FormControl(''),
-        departamento: new FormControl(''),
-        centro: new FormControl(''),
-        empleados: new FormArray([]),
-        auditorias: new FormArray([])
-    })
+  constructor(
+    private _empleadosService: EmpleadosService = inject(EmpleadosService),
+    private _coordinadorService: CoordinadorService = inject(CoordinadorService),
+    private _centroService: CentroService = inject(CentroService),
+    private _departamentoService: DepartamentoServices = inject(DepartamentoServices)
+  ) {}
 
-    constructor(
-        private _empleadosService: EmpleadosService = inject(EmpleadosService),
-        private _coordinadorService: CoordinadorService = inject(CoordinadorService),
-        private _router: ActivatedRoute = inject(ActivatedRoute)
-    ){
-        this.idCoordinador = parseInt(this._router.snapshot.paramMap.get('id')!);
-    }
+  ngOnInit(): void {
+    this._centroService.getAllCentros().subscribe((centros) => {
+      this.centros = centros;
+    });
 
-    ngOnInit(): void {
+    this._departamentoService.getAllDepartamentos().subscribe((departamentos) => {
+      this.departamentos = departamentos;
+    });
+  }
 
-        this._coordinadorService.getCoordinadorById(this.idCoordinador).subscribe((coordinador) => {
-            this.coordinador = coordinador;
-        });
+  get empleados(): FormArray {
+    return this.formControl.get('empleados') as FormArray;
+  }
 
-        this.formControl.patchValue({
-            nombre: this.coordinador.nombre,
-            apellidos: this.coordinador.apellidos,
-            usuario: this.coordinador.usuario,
-            rol: this.coordinador.rol,
-            departamento: this.coordinador.departamento,
-            centro: this.coordinador.centro,
-        })
+  crearEmpleado(formControl: FormGroup) {
+    const coordinadorCentroDto: CoordinadorCentroDTO = {
+      coordinador: {
+        nombre: formControl.get('nombre')?.value,
+        apellidos: formControl.get('apellidos')?.value,
+        usuario: formControl.get('usuario')?.value,
+        password: formControl.get('password')?.value,
+        id_rrhh: formControl.get('idrrhh')?.value,
+      },
+      idDepartamento: formControl.get('departamento')?.value,
+      idCentro: formControl.get('centro')?.value,
+    };
 
-        this._empleadosService.getEmpleadosByCoordinador(this.idCoordinador).subscribe((empleados) => {
-            empleados.forEach(empleado => {
-                this.empleados.controls.push(new FormControl(empleado));
-            })
-        });
-    }
-
-    get empleados(): FormArray {
-        return this.formControl.get('empleados') as FormArray;
-    }
-
-    getCoordinador(id: number){
-        
-    }
+    this._coordinadorService.crearCoordinador(coordinadorCentroDto).subscribe({
+      next: (coordinador) => {
+        console.log(coordinador);
+      },
+      error: () => {
+        console.log('No se ha podido crear el coordinador');
+      },
+    });
+  }
 }

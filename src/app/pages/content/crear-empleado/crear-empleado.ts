@@ -11,90 +11,92 @@ import { Coordinador } from '../../../core/models/Coordinador';
 import { ErrorService } from '../../../core/services/error-service';
 import { AcceptedService } from '../../../core/services/accepted-service';
 import { ComunicationService } from '../../../core/services/comunication-service';
-import { Router } from '@angular/router';
-
+import { Router, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-crear-empleado',
-  imports: [FormsModule],
+  imports: [FormsModule, MatButtonModule, MatTooltipModule, RouterLink],
   templateUrl: './crear-empleado.html',
   styleUrl: './crear-empleado.css',
 })
-export class CrearEmpleado implements OnInit{
+export class CrearEmpleado implements OnInit {
+  estadoLogin: boolean;
 
-    estadoLogin: boolean;
+  empleado: Empleado;
+  departamentos: Array<Departamento>;
+  centros: Array<Centro>;
+  coordinadores: Array<Coordinador>;
+  nombre: string;
+  apellidos: string;
+  email: string;
+  direccion: string;
+  actividad: string;
+  id_departamento: number;
+  id_centro: number;
+  id_coordinador: number;
 
-    empleado: Empleado;
-    departamentos: Array<Departamento>;
-    centros: Array<Centro>;
-    coordinadores: Array<Coordinador>;
-    nombre: string;
-    apellidos: string;
-    email: string;
-    direccion: string;
-    actividad: string;
-    id_departamento: number;
-    id_centro: number;
-    id_coordinador: number;
+  constructor(
+    private _empleadosService: EmpleadosService = inject(EmpleadosService),
+    private _departamentosService: DepartamentoServices = inject(DepartamentoServices),
+    private _centrosService: CentroService = inject(CentroService),
+    private _coordinadorService: CoordinadorService = inject(CoordinadorService),
+    private _errorService: ErrorService = inject(ErrorService),
+    private _acceptedService: AcceptedService = inject(AcceptedService),
+    private _comunicationService: ComunicationService = inject(ComunicationService),
+    private _route: Router = inject(Router)
+  ) {}
 
-    constructor(
-        private _empleadosService: EmpleadosService = inject(EmpleadosService),
-        private _departamentosService: DepartamentoServices = inject(DepartamentoServices),
-        private _centrosService: CentroService = inject(CentroService),
-        private _coordinadorService: CoordinadorService = inject(CoordinadorService),
-        private _errorService: ErrorService = inject(ErrorService),
-        private _acceptedService: AcceptedService = inject(AcceptedService),
-        private _comunicationService: ComunicationService = inject(ComunicationService),
-        private _route: Router = inject(Router),
-    ){}
+  ngOnInit(): void {
+    this._comunicationService.estadoLogin$.subscribe({
+      next: (estado) => {
+        this.estadoLogin = estado;
+      },
+    });
 
-    ngOnInit(): void {
-
-        this._comunicationService.estadoLogin$.subscribe({
-            next: (estado) =>{
-                this.estadoLogin = estado;
-            }
-        })
-
-        if(!this.estadoLogin){
-            this._route.navigate(['/']);
-        }
-
-        this._departamentosService.getAllDepartamentos().subscribe((d) => {
-            this.departamentos = d;
-        })
-
-        this._centrosService.getAllCentros().subscribe((c) => {
-            this.centros = c;
-        })
+    if (!this.estadoLogin) {
+      this._route.navigate(['/']);
     }
 
-    crearEmpleado(empleado: Empleado){
-        this._empleadosService.createEmpleado(this.id_coordinador, this.id_departamento, empleado).subscribe({
-            next: () => {
-                this._acceptedService.showMessage("Empleado creado correctamente");
-            },
-            error: () => {
-                this._errorService.showMessageError("Faltan datos");
-            }
-        })
-    }
+    this._departamentosService.getAllDepartamentos().subscribe((d) => {
+      this.departamentos = d;
+    });
 
-    onIdCentroChange(){
-        if (this.id_centro && this.id_departamento){
-            this.obtenerCoordinadores(this.id_departamento, this.id_centro);
-        }
-    }
+    this._centrosService.getAllCentros().subscribe((c) => {
+      this.centros = c;
+    });
+  }
 
-    onIdDepartamentoChange(){
-        if (this.id_centro && this.id_departamento){
-            this.obtenerCoordinadores(this.id_departamento, this.id_centro);
-        }
-    }
+  crearEmpleado(empleado: Empleado) {
+    this._empleadosService
+      .createEmpleado(this.id_coordinador, this.id_departamento, empleado)
+      .subscribe({
+        next: () => {
+          this._acceptedService.showMessage('Empleado creado correctamente');
+        },
+        error: () => {
+          this._errorService.showMessageError('Faltan datos');
+        },
+      });
+  }
 
-    obtenerCoordinadores(idDepartamento: number, idCentro: number){
-        this._coordinadorService.getCoordinadoresDepartamentoCentral(idDepartamento, idCentro).subscribe((c) => {
-            this.coordinadores = c;
-        })
+  onIdCentroChange() {
+    if (this.id_centro && this.id_departamento) {
+      this.obtenerCoordinadores(this.id_departamento, this.id_centro);
     }
+  }
 
+  onIdDepartamentoChange() {
+    if (this.id_centro && this.id_departamento) {
+      this.obtenerCoordinadores(this.id_departamento, this.id_centro);
+    }
+  }
+
+  obtenerCoordinadores(idDepartamento: number, idCentro: number) {
+    this._coordinadorService
+      .getCoordinadoresDepartamentoCentral(idDepartamento, idCentro)
+      .subscribe((c) => {
+        this.coordinadores = c;
+      });
+  }
 }
