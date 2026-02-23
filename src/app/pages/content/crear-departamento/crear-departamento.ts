@@ -12,6 +12,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { DepartamentoServices } from '../../../core/services/departamento-services';
 import { ColectivoService } from '../../../core/services/colectivo-service';
 import { Colectivo } from '../../../core/models/Colectivo';
+import { DepartamentoDTO } from '../../../core/Dto/DepartamentoDTO';
 
 @Component({
   selector: 'app-crear-departamento',
@@ -60,5 +61,22 @@ export class CrearDepartamento implements OnInit {
 
   get colectivos(): FormArray {
     return this.formControl.get('colectivos') as FormArray;
+  }
+
+  crearDepartamento(formControl: FormGroup) {
+    const idsColectivos = formControl.get('colectivos')?.value as Array<number>;
+    const departamentoDto: DepartamentoDTO = {
+      departamento: {
+        nombre: formControl.get('nombre')?.value,
+      },
+      idColectivos: idsColectivos,
+    };
+
+    this._departamentoService.crearDepartamento(departamentoDto).subscribe({
+      next: (departamento) => {},
+      error: () => {
+        console.log('No se ha podido agregar al departamento');
+      },
+    });
   }
 }

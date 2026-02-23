@@ -3,27 +3,23 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Auditorias } from '../models/Auditorias';
 import { ROUTE_AUDITORIA, ROUTE_AUDITORIAS } from '../environments/globals';
-import { AuditelDTO } from '../Dto/AuditelDto';
+import { AuditelEntrantesDTO } from '../Dto/AuditelEntrantesDto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuditoriasService {
+  constructor(private _httpService: HttpClient = inject(HttpClient)) {}
 
-    constructor(
-        private _httpService: HttpClient = inject(HttpClient),
-    ){}
+  getAuditorias(): Observable<Array<Auditorias>> {
+    return this._httpService.get<Array<Auditorias>>(`${ROUTE_AUDITORIAS}`);
+  }
 
-    getAuditorias(): Observable<Array<Auditorias>>{
-        return this._httpService.get<Array<Auditorias>>(`${ROUTE_AUDITORIAS}`);
-    }
+  createAuditoria(auditoriaDto: AuditelEntrantesDTO) {
+    return this._httpService.post<Auditorias>(`${ROUTE_AUDITORIA}`, auditoriaDto);
+  }
 
-    createAuditoria(auditoriaDto: AuditelDTO){
-        return this._httpService.post<Auditorias>(`${ROUTE_AUDITORIA}`, auditoriaDto);
-    }
-
-    getAuditoria(id_auditoria: number): Observable<Auditorias>{
-        return this._httpService.get<Auditorias>(`${ROUTE_AUDITORIA}/${id_auditoria}`);
-    }
-  
+  getAuditoria(id_auditoria: number): Observable<Auditorias> {
+    return this._httpService.get<Auditorias>(`${ROUTE_AUDITORIA}/${id_auditoria}`);
+  }
 }

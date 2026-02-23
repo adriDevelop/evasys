@@ -1,135 +1,126 @@
 @if(estadoLogin){
 <section class="general-container-empleados">
-  <section class="title">
-    <p class="title-name">Crear empleado</p>
-  </section>
-  <section class="datos-empleado">
-    <form action="">
-      <div class="row g-2">
-        <div class="col-md">
-          <label for="n_expediente" class="form-label">Número de expediente</label>
-          <input
-            type="text"
-            id="n_expediente"
-            class="form-control"
-            [(ngModel)]="expediente"
-            name="n_expediente"
-          />
-        </div>
-        <div class="col-md">
-          <label for="fecha" class="form-label">Fecha</label>
-          <input type="date" id="fecha" class="form-control" [(ngModel)]="fecha" name="fecha" />
-        </div>
-      </div>
-      <div class="row g-2">
-        <div class="col-md">
-          <label for="empleado" class="form-label">Empleado</label>
-          <select
-            type="number"
-            id="empleado"
-            class="form-control"
-            [(ngModel)]="id_empleado"
-            (ngModelChange)="onEmpleadoChanges()"
-            name="empleado"
-          >
-            @for (empleado of empleados; track $index) {
-            <option [ngValue]="empleado.id_empleado">{{ empleado.nombre }}</option>
-            }
-          </select>
-        </div>
-        @if (id_empleado && id_coordinador_empleado){
-        <div class="col-md">
-          <label for="coordinador_empleado" class="form-label">Coordinador empleado</label>
-          <input
-            type="text"
-            id="coordinador_empleado"
-            class="form-control"
-            [(ngModel)]="coordinador"
-            name="coordinador_empleado"
-            disabled
-          />
-        </div>
-        <div class="col-md">
-          <label for="departamento" class="form-label">Departamento</label>
-          <input
-            type="text"
-            id="departamento"
-            class="form-control"
-            [(ngModel)]="departamento.nombre"
-            name="departamento"
-            disabled
-          />
-          <input
-            type="number"
-            id="departamento_id"
-            class="form-control"
-            [(ngModel)]="id_departamento"
-            name="departamento_id"
-            hidden
-          />
-        </div>
-        }
-        <div class="col-md">
-          <label for="colectivo" class="form-label">Colectivo</label>
-          <select
-            type="number"
-            id="colectivo"
-            class="form-control"
-            [(ngModel)]="colectivo"
-            (ngModelChange)="onColectivoChanges()"
-            name="colectivo"
-          >
-            @for (colectivo of colectivos; track $index) {
-            <option [ngValue]="colectivo.id_colectivo">{{ colectivo.nombre }}</option>
-            }
-          </select>
-        </div>
-        <div class="col-md">
-          <label for="coordinador" class="form-label">Coordinador auditoria</label>
-          <select
-            type="number"
-            id="coordinador"
-            class="form-control"
-            [(ngModel)]="id_coordinador_auditel"
-            (ngModelChange)="onCoordinadorAuditoriaChanges()"
-            name="coordinador_auditoria"
-          >
-            @for (coord of coordinadores; track $index) {
-            <option [ngValue]="coord.id_coordinador">{{ coord.nombre }}</option>
-            }
-          </select>
-        </div>
-        <div class="col-md">
-          <label for="puntuación_total" class="form-label">Puntuación total</label>
-          <input
-            type="number"
-            id="puntuacion_total"
-            class="form-control"
-            [(ngModel)]="puntuacion_total_auditoria"
-            name="puntuacion_total"
-          />
-        </div>
-      </div>
+  <section class="content">
+    <section class="title">
       <button
-        class="btn btn-dark"
-        (click)="
-          crearAuditel({
-            audicion: {
-              expediente: expediente,
-              fecha: fecha,
-              puntuacion_total_auditoria: puntuacion_total_auditoria
-            },
-            idEmpleado: id_empleado,
-            idCoordinadorEmpleado: id_coordinador_empleado,
-            idCoordinadorAuditel: id_coordinador_auditel,
-            idDepartamento: id_departamento,
-            idColectivo: colectivo
-          })
-        "
+        matButton="elevated"
+        matTooltip="Volver a coordinadores"
+        matTooltipTrigger="hover"
+        class="title-name"
+        [routerLink]="['/empleados/listadoAuditeles']"
       >
-        Crear
+        <i class="fa-solid fa-angle-left"></i>Auditeles/Crear auditel
       </button>
-    </form>
+    </section>
+    <section class="datos-empleado">
+      <form [formGroup]="formControl">
+        <div class="row g-2">
+          <div class="col-md">
+            <label for="n_expediente" class="form-label">Número de expediente</label>
+            <input
+              type="text"
+              id="n_expediente"
+              class="form-control"
+              formControlName="expediente"
+              name="n_expediente"
+            />
+          </div>
+          <div class="col-md">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input
+              type="date"
+              id="fecha"
+              class="form-control"
+              formControlName="fecha"
+              name="fecha"
+            />
+          </div>
+          <div class="col-md">
+            <label for="empleado" class="form-label">Empleado</label>
+            <select
+              type="number"
+              id="empleado"
+              class="form-control"
+              formControlName="id_empleado"
+              name="empleado"
+            >
+              @for (empleado of empleados; track $index) {
+              <option [ngValue]="empleado.id_empleado">{{ empleado.nombre }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <div class="row g-2">
+          @if (id_empleado && id_coordinador_empleado){
+          <div class="col-md">
+            <label for="coordinador_empleado" class="form-label">Coordinador empleado</label>
+            <select
+              type="text"
+              id="coordinador_empleado"
+              class="form-control"
+              formControlName="id_coordinador_empleado"
+              name="coordinador_empleado"
+            >
+              <option [value]="coordinador.id_coordinador">{{ coordinador.usuario }}</option>
+            </select>
+          </div>
+          <div class="col-md">
+            <label for="departamento" class="form-label">Departamento</label>
+            <select
+              type="number"
+              id="departamento_id"
+              class="form-control"
+              formControlName="id_departamento"
+              name="departamento_id"
+            >
+              <option [value]="departamento.id_departamento">{{ departamento.nombre }}</option>
+            </select>
+          </div>
+          @if(departamento.nombre == 'ASISTENCIA'){
+          <mat-radio-group aria-label="Selecciona una opción" formControlName="tipoAsistencia">
+            @for (opcion of tiposAsistencia; track $index) {
+            <mat-radio-button [value]="opcion">{{ opcion }}</mat-radio-button>
+            }
+          </mat-radio-group>
+          } }
+          <div class="col-md">
+            <label for="colectivo" class="form-label">Colectivo</label>
+            <select
+              type="number"
+              id="colectivo"
+              class="form-control"
+              formControlName="colectivo"
+              name="colectivo"
+            >
+              @for (colectivo of colectivos; track $index) {
+              <option [ngValue]="colectivo.id_colectivo">{{ colectivo.nombre }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-md">
+            <label for="puntuación_total" class="form-label">Puntuación total</label>
+            <input
+              type="number"
+              id="puntuacion_total"
+              class="form-control"
+              formControlName="puntuacion_total_auditoria"
+              name="puntuacion_total"
+            />
+          </div>
+        </div>
+      </form>
+    </section>
+    @if(departamento == "ASISTENCIA" && tiposAsistencia){
+    <app-formulario-dinamico
+      [formControlPadre]="formControl"
+      [tipoFormulario]="tipoAsistencia"
+    ></app-formulario-dinamico>
+    }@else if(departamento){
+    <app-formulario-dinamico
+      [formControlPadre]="formControl"
+      [tipoFormulario]="tipoAsistencia"
+    ></app-formulario-dinamico>
+    }
   </section>
 </section>
 }

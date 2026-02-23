@@ -1,0 +1,33 @@
+@if (formControl) {
+<section class="general-container-empleados">
+  <section class="content">
+    <section class="datos-empleado">
+      <form class="form-group-completo" [formGroup]="formGroupCompleto">
+        <div class="kpis-container">
+          @for (kpi of formSections; track $index) {
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ kpi.name }}</mat-panel-title>
+              <mat-panel-description>{{
+                formGroupResultado.get(kpi.key.toLowerCase() + '_resultado')?.value
+              }}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <form [formGroupName]="kpi.key">
+              @for(valorCalcular of kpi.entries; track $index){
+              <label>{{ valorCalcular[0] }}</label>
+              <mat-radio-group [formControl]="valorCalcular[1]">
+                @for (item of ['Si', 'No', 'NE']; track $index) {
+                <mat-radio-button [value]="item == 'Si' ? 5 : 0">{{ item }}</mat-radio-button>
+                }
+              </mat-radio-group>
+              }
+            </form>
+          </mat-expansion-panel>
+          }
+        </div>
+      </form>
+    </section>
+    <section class="form-calculo"></section>
+  </section>
+</section>
+}@else { }

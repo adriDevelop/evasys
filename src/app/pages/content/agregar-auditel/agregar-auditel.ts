@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Departamento } from '../../../core/models/Departamento';
 import { Coordinador } from '../../../core/models/Coordinador';
 import { Auditorias } from '../../../core/models/Auditorias';
@@ -12,38 +12,49 @@ import { Empleado } from '../../../core/models/Empleado';
 import { CentroService } from '../../../core/services/centro-service';
 import { DepartamentoServices } from '../../../core/services/departamento-services';
 import { Colectivo } from '../../../core/models/Colectivo';
-import { AuditelDTO } from '../../../core/Dto/AuditelDto';
+import { AuditelEntrantesDTO } from '../../../core/Dto/AuditelEntrantesDto';
 import { ComunicationService } from '../../../core/services/comunication-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthService } from '../../../core/services/auth-service';
+import { MatRadioModule } from '@angular/material/radio';
+import { FormularioDinamico } from '../../../shared/components/formulario-dinamico/formulario-dinamico';
 
 @Component({
   selector: 'app-agregar-auditel',
-  imports: [FormsModule],
+  imports: [
+    FormsModule,
+    RouterLink,
+    MatButtonModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    FormularioDinamico,
+  ],
   templateUrl: './agregar-auditel.html',
   styleUrl: './agregar-auditel.css',
 })
 export class AgregarAuditel implements OnInit {
   estadoLogin: boolean;
+  id_coord: number;
+  tiposAsistencia: Array<String> = ['entrantes', 'salientes'];
 
-  // Datos necesarios para mostrar el formulario
-  coordinadores: Array<Coordinador>;
+  formControl: FormGroup = new FormGroup({
+    expediente: new FormControl(''),
+    fecha: new FormControl(''),
+    puntuacion_total_auditoria: new FormControl(0),
+    colectivo: new FormControl(0),
+    id_empleado: new FormControl(0),
+    id_coordinador_empleado: new FormControl(0),
+    id_departamento: new FormControl(0),
+    coordinador: new FormControl(),
+    departamento: new FormControl(),
+    tipoAsistencia: new FormControl(),
+  });
+
   colectivos: Array<Colectivo>;
   empleados: Array<Empleado>;
-  coordinador: string;
-  coordinadorAuditoria: Coordinador;
-  departamento: Departamento;
-
-  // Datos necesarios para dto
-  id_empleado: number;
-  id_coordinador_empleado: number;
-  id_coordinador_auditel: number;
-  id_departamento: number;
-
-  // Datos necesarios para Audicion
-  expediente: string;
-  fecha: string;
-  puntuacion_total_auditoria: number;
-  colectivo: number;
 
   constructor(
     private _auditoriasService: AuditoriasService = inject(AuditoriasService),
@@ -54,6 +65,7 @@ export class AgregarAuditel implements OnInit {
     private _acceptedService: AcceptedService = inject(AcceptedService),
     private _errorService: ErrorService = inject(ErrorService),
     private _comunicationService: ComunicationService = inject(ComunicationService),
+    private _authService: AuthService = inject(AuthService),
     private _router: Router = inject(Router)
   ) {}
 
@@ -61,50 +73,56 @@ export class AgregarAuditel implements OnInit {
     this._comunicationService.estadoLogin$.subscribe({
       next: (estado) => {
         this.estadoLogin = estado;
-        console.log('Estado login ' + estado);
       },
     });
+
+    this.id_coord = this._authService.getIdFromPayload();
 
     if (!this.estadoLogin) {
       this._router.navigate(['/']);
     }
 
-    this._empleadosService.getAllEmpleados().subscribe((e) => {
+    this._empleadosService.getEmpleadosByCoordinador(this.id_coord).subscribe((e) => {
       this.empleados = e;
     });
-  }
 
-  crearAuditel(auditelDto: AuditelDTO) {
-    this._auditoriasService.createAuditoria(auditelDto).subscribe({
-      next: () => {
-        this._acceptedService.showMessage('Auditoria creada correctamente');
-      },
-      error: () => {
-        this._errorService.showMessageError('No se ha podido crear');
-      },
-    });
-  }
-
-  onEmpleadoChanges() {
-    this._empleadosService.getEmpleadoById(this.id_empleado).subscribe((e) => {
-      this.id_departamento = e.departamento?.id_departamento!;
-      this.departamento = e.departamento!;
-      this.id_coordinador_empleado = e.coordinador?.id_coordinador!;
-      this.coordinador = e.coordinador?.nombre!;
-      this._departamentosService.getDepartamentoById(this.id_departamento).subscribe((d) => {
-        this.colectivos = d.colectivos;
+    this.formControl.get('id_empleado')?.valueChanges.subscribe((id) => {
+      this._empleadosService.getEmpleadoById(id).subscribe((empleado) => {
+        this._coordinadoresService
+          .getCoordinadorById(empleado.coordinador?.id_coordinador!)
+          .subscribe((coordinador) => {
+            this.formControl.patchValue({
+              id_coordinador_empleado: coordinador.id_coordinador,
+              id_departamento: coordinador.departamento?.id_departamento,
+              coordinador: coordinador,
+              departamento: coordinador.departamento,
+              tipoAsistencia:
+                coordinador.departamento?.nombre !== 'ASISTENCIA'
+                  ? coordinador.departamento?.nombre.toLowerCase()
+                  : null,
+            });
+          });
       });
-      this._coordinadoresService
-        .getCoordinadoresDepartamentoCentral(this.id_departamento, e.centro?.id_centro!)
-        .subscribe((c) => {
-          this.coordinadores = c;
-        });
-
-      console.log(this.id_departamento);
     });
   }
 
-  onColectivoChanges() {}
+  get id_empleado() {
+    return this.formControl.get('id_empleado')?.value;
+  }
 
-  onCoordinadorAuditoriaChanges() {}
+  get id_coordinador_empleado() {
+    return this.formControl.get('id_coordinador_empleado')?.value;
+  }
+
+  get coordinador() {
+    return this.formControl.get('coordinador')?.value;
+  }
+
+  get departamento() {
+    return this.formControl.get('departamento')?.value;
+  }
+
+  get tipoAsistencia() {
+    return this.formControl.get('tipoAsistencia')?.value;
+  }
 }

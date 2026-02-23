@@ -12,6 +12,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { DepartamentoServices } from '../../../core/services/departamento-services';
 import { ColectivoService } from '../../../core/services/colectivo-service';
 import { Colectivo } from '../../../core/models/Colectivo';
+import { DepartamentoDTO } from '../../../core/Dto/DepartamentoDTO';
 
 @Component({
   selector: 'app-editar-departamento',
@@ -75,5 +76,23 @@ export class EditarDepartamento implements OnInit {
 
   get colectivos(): FormArray {
     return this.formControl.get('colectivos') as FormArray;
+  }
+
+  editarDepartamento(formControl: FormGroup) {
+    const idColectivosForms = this.formControl.get('colectivos')?.value as Array<number>;
+    const departamentoDto: DepartamentoDTO = {
+      departamento: {
+        id_departamento: this.id_departamento,
+        nombre: formControl.get('nombre')?.value,
+      },
+      idColectivos: idColectivosForms,
+    };
+
+    this._departamentoService.editarDepartamento(departamentoDto).subscribe({
+      next: (departamento) => {},
+      error: () => {
+        console.log('No se ha editado el departamento');
+      },
+    });
   }
 }
