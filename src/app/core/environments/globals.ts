@@ -1,5 +1,5 @@
-export const URL_BASE = 'http://localhost:8080/';
-export const ROUTE_API = 'http://localhost:8080/api/';
+export const URL_BASE = 'http://auditoria-api:8080/';
+export const ROUTE_API = 'http://auditoria-api:8080/api/';
 export const ROUTE_EMPLEADOS = ROUTE_API.concat('empleados');
 export const ROUTE_EMPLEADO = ROUTE_API.concat('empleado');
 export const ROUTE_CENTRO = ROUTE_API.concat('centro');
