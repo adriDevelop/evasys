@@ -1,47 +1,53 @@
-<section class="general-container-coordinador">
-  <section class="content">
-    <section class="title">
-      <button
-        matButton="elevated"
-        matTooltip="Volver a coordinadores"
-        class="title-name"
-        [routerLink]="['/empleados/listadoDepartamentos']"
-      >
-        <i class="fa-solid fa-angle-left"></i>Departamentos/Editar departamento
-      </button>
-    </section>
-    <section class="datos-coordinador">
-      <form [formGroup]="formControl" action="">
-        <div class="row g-2">
-          <div class="col-md">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input
-              type="text"
-              id="nombre"
-              class="form-control"
-              formControlName="nombre"
-              name="nombre"
-            />
+@if (!datosForm) {
+  <section class="carga">
+    <app-resolver-component></app-resolver-component>
+  </section>
+} @else {
+  <section class="general-container-coordinador">
+    <section class="content">
+      <section class="title">
+        <button
+          matButton="elevated"
+          matTooltip="Volver a coordinadores"
+          class="title-name"
+          [routerLink]="['/empleados/listadoDepartamentos']"
+        >
+          <i class="fa-solid fa-angle-left"></i>Departamentos/Editar departamento
+        </button>
+      </section>
+      <section class="datos-coordinador">
+        <form [formGroup]="formControl" action="">
+          <div class="row g-2">
+            <div class="col-md">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                class="form-control"
+                formControlName="nombre"
+                name="nombre"
+              />
+            </div>
           </div>
-        </div>
-        <div class="row g-2">
-          <div class="col-md">
-            <label for="colectivos" class="form-label">Colectivos</label>
-            <select
-              type="text"
-              id="id_colectivo"
-              class="form-control"
-              formControlName="id_colectivo"
-              name="id_colectivo"
-            >
-              @for (colectivo of todosColectivos; track $index) {
-              <option [value]="colectivo.id_colectivo">{{ colectivo.nombre }}</option>
-              }
-            </select>
+          <div class="row g-2">
+            <div class="col-md">
+              <label for="colectivos" class="form-label">Colectivos</label>
+              <select
+                type="text"
+                id="id_colectivo"
+                class="form-control"
+                formControlName="id_colectivo"
+                name="id_colectivo"
+              >
+                @for (colectivo of todosColectivos; track $index) {
+                  <option [value]="colectivo.id_colectivo">{{ colectivo.nombre }}</option>
+                }
+              </select>
+            </div>
           </div>
-        </div>
-        <button class="btn btn-dark" (click)="editarDepartamento(formControl)">Editar</button>
-      </form>
+          <button class="btn btn-dark" (click)="editarDepartamento(formControl)">Editar</button>
+        </form>
+      </section>
     </section>
   </section>
-</section>
+}

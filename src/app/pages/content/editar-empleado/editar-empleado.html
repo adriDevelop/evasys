@@ -1,150 +1,156 @@
-<section class="general-container-empleados">
-  <section class="content">
-    <section class="title">
-      <button
-        matButton="elevated"
-        matTooltip="Volver a coordinadores"
-        class="title-name"
-        [routerLink]="['/empleados/listadoEmpleados']"
-      >
-        <i class="fa-solid fa-angle-left"></i>Empleados/Editar empleado
-      </button>
-    </section>
-    <section class="datos-empleado">
-      @if (empleado) {
-      <form action="">
-        <div class="row g-2">
-          <div class="col-md">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input
-              type="text"
-              id="nombre"
-              class="form-control"
-              [(ngModel)]="empleado.nombre"
-              name="nombre"
-            />
-          </div>
-          <div class="col-md">
-            <label for="apellidos" class="form-label">Apellidos</label>
-            <input
-              type="text"
-              id="apellidos"
-              class="form-control"
-              [(ngModel)]="empleado.apellidos"
-              name="apellidos"
-            />
-          </div>
-        </div>
-        <div class="col-md">
-          <label for="email" class="form-label">Email</label>
-          <input
-            type="text"
-            id="email"
-            class="form-control"
-            [(ngModel)]="empleado.email"
-            name="email"
-          />
-        </div>
-        <div class="col-md">
-          <label for="direccion" class="form-label">Dirección</label>
-          <input
-            type="text"
-            id="direccion"
-            class="form-control"
-            [(ngModel)]="empleado.direccion"
-            name="direccion"
-          />
-        </div>
-        <div class="row g-2">
-          <div class="col-md">
-            <label for="fecha_alta" class="form-label">Fecha alta</label>
-            <input
-              type="date"
-              id="fecha_alta"
-              class="form-control"
-              [(ngModel)]="empleado.fecha_alta"
-              name="fecha_alta"
-            />
-          </div>
-          <div class="col-md">
-            <label for="fecha_baja" class="form-label">Fecha baja</label>
-            <input
-              type="date"
-              id="fecha_baja"
-              class="form-control"
-              [(ngModel)]="empleado.fecha_baja"
-              name="fecha_baja"
-            />
-          </div>
-        </div>
-        <div class="row g-2">
-          <div class="col-md">
-            <label for="actividad" class="form-label">Actividad</label>
-            <input
-              tpye="text"
-              id="actividad"
-              class="form-control"
-              [(ngModel)]="empleado.actividad"
-              name="actividad"
-            />
-          </div>
-          <div class="col-md">
-            <label for="departamento" class="form-label">Departamento</label>
-            <input
-              tpye="text"
-              id="departamento"
-              class="form-control"
-              [value]="empleado.departamento?.nombre"
-              disabled
-              name="departamento"
-            />
-          </div>
-          <div class="col-md">
-            <label for="central" class="form-label">Central</label>
-            <input
-              tpye="text"
-              id="central"
-              class="form-control"
-              [value]="empleado.centro?.nombre"
-              disabled
-              name="central"
-            />
-          </div>
-        </div>
-        <div class="col-md">
-          <label for="coordinador" class="form-label">Coordinador</label>
-          <input
-            tpye="text"
-            id="coordinador"
-            class="form-control"
-            [(ngModel)]="empleado.coordinador!.usuario"
-            name="coordinador"
-          />
-        </div>
+@if (!empleado) {
+  <section class="carga">
+    <app-resolver-component></app-resolver-component>
+  </section>
+} @else {
+  <section class="general-container-empleados">
+    <section class="content">
+      <section class="title">
         <button
-          class="btn btn-dark"
-          (click)="
-            editarUsuario({
-              id_empleado: empleado.id_empleado!,
-              nombre: empleado.nombre,
-              apellidos: empleado.apellidos,
-              email: empleado.email,
-              direccion: empleado.direccion,
-              fecha_alta: empleado.fecha_alta,
-              fecha_baja: empleado.fecha_baja,
-              activo: empleado.activo,
-              actividad: empleado.actividad,
-              departamento: empleado.departamento,
-              coordinador: empleado.coordinador,
-              centro: empleado.centro,
-              auditorias: empleado.auditorias
-            })
-          "
+          matButton="elevated"
+          matTooltip="Volver a coordinadores"
+          class="title-name"
+          [routerLink]="['/empleados/listadoEmpleados']"
         >
-          Editar
+          <i class="fa-solid fa-angle-left"></i>Empleados/Editar empleado
         </button>
-      </form>
-      }
+      </section>
+      <section class="datos-empleado">
+        @if (empleado) {
+          <form action="">
+            <div class="row g-2">
+              <div class="col-md">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  class="form-control"
+                  [(ngModel)]="empleado.nombre"
+                  name="nombre"
+                />
+              </div>
+              <div class="col-md">
+                <label for="apellidos" class="form-label">Apellidos</label>
+                <input
+                  type="text"
+                  id="apellidos"
+                  class="form-control"
+                  [(ngModel)]="empleado.apellidos"
+                  name="apellidos"
+                />
+              </div>
+            </div>
+            <div class="col-md">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="text"
+                id="email"
+                class="form-control"
+                [(ngModel)]="empleado.email"
+                name="email"
+              />
+            </div>
+            <div class="col-md">
+              <label for="direccion" class="form-label">Dirección</label>
+              <input
+                type="text"
+                id="direccion"
+                class="form-control"
+                [(ngModel)]="empleado.direccion"
+                name="direccion"
+              />
+            </div>
+            <div class="row g-2">
+              <div class="col-md">
+                <label for="fecha_alta" class="form-label">Fecha alta</label>
+                <input
+                  type="date"
+                  id="fecha_alta"
+                  class="form-control"
+                  [(ngModel)]="empleado.fecha_alta"
+                  name="fecha_alta"
+                />
+              </div>
+              <div class="col-md">
+                <label for="fecha_baja" class="form-label">Fecha baja</label>
+                <input
+                  type="date"
+                  id="fecha_baja"
+                  class="form-control"
+                  [(ngModel)]="empleado.fecha_baja"
+                  name="fecha_baja"
+                />
+              </div>
+            </div>
+            <div class="row g-2">
+              <div class="col-md">
+                <label for="actividad" class="form-label">Actividad</label>
+                <input
+                  tpye="text"
+                  id="actividad"
+                  class="form-control"
+                  [(ngModel)]="empleado.actividad"
+                  name="actividad"
+                />
+              </div>
+              <div class="col-md">
+                <label for="departamento" class="form-label">Departamento</label>
+                <input
+                  tpye="text"
+                  id="departamento"
+                  class="form-control"
+                  [value]="empleado.departamento?.nombre"
+                  disabled
+                  name="departamento"
+                />
+              </div>
+              <div class="col-md">
+                <label for="central" class="form-label">Central</label>
+                <input
+                  tpye="text"
+                  id="central"
+                  class="form-control"
+                  [value]="empleado.centro?.nombre"
+                  disabled
+                  name="central"
+                />
+              </div>
+            </div>
+            <div class="col-md">
+              <label for="coordinador" class="form-label">Coordinador</label>
+              <input
+                tpye="text"
+                id="coordinador"
+                class="form-control"
+                [(ngModel)]="empleado.coordinador!.usuario"
+                name="coordinador"
+              />
+            </div>
+            <button
+              class="btn btn-dark"
+              (click)="
+                editarUsuario({
+                  id_empleado: empleado.id_empleado!,
+                  nombre: empleado.nombre,
+                  apellidos: empleado.apellidos,
+                  email: empleado.email,
+                  direccion: empleado.direccion,
+                  fecha_alta: empleado.fecha_alta,
+                  fecha_baja: empleado.fecha_baja,
+                  activo: empleado.activo,
+                  actividad: empleado.actividad,
+                  departamento: empleado.departamento,
+                  coordinador: empleado.coordinador,
+                  centro: empleado.centro,
+                  auditorias: empleado.auditorias,
+                })
+              "
+            >
+              Editar
+            </button>
+          </form>
+        }
+      </section>
     </section>
   </section>
-</section>
+}

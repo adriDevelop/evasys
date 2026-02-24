@@ -13,10 +13,10 @@ export class CoordinadorService {
 
   getCoordinadoresDepartamentoCentral(
     idDepartamento: number,
-    idCentro: number
+    idCentro: number,
   ): Observable<Array<Coordinador>> {
     return this._httpClient.get<Array<Coordinador>>(
-      `${ROUTE_COORDINADOR}/${idDepartamento}/${idCentro}`
+      `${ROUTE_COORDINADOR}/${idDepartamento}/${idCentro}`,
     );
   }
 
@@ -38,5 +38,12 @@ export class CoordinadorService {
 
   crearCoordinador(coordinadorDto: CoordinadorCentroDTO): Observable<Coordinador> {
     return this._httpClient.post<Coordinador>(`${ROUTE_COORDINADOR}`, coordinadorDto);
+  }
+
+  cambiarContraseñaCoordinador(id_coordinador: number, password: string): Observable<Coordinador> {
+    return this._httpClient.put<Coordinador>(`${ROUTE_COORDINADOR}-password`, {
+      idCoordinador: id_coordinador,
+      password: password,
+    });
   }
 }

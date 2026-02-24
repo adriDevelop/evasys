@@ -9,11 +9,11 @@ import {
 } from '@angular/forms';
 import { CentroService } from '../../../core/services/centro-service';
 import { DepartamentoServices } from '../../../core/services/departamento-services';
-import { CentroDTO } from '../../../core/Dto/CentroDTO';
 import { Beans } from '../../../shared/components/beans/beans';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-crear-centro',
@@ -33,7 +33,8 @@ export class CrearCentro implements OnInit {
 
   constructor(
     private _centroService: CentroService = inject(CentroService),
-    private _departamentoService: DepartamentoServices = inject(DepartamentoServices)
+    private _snackBar: MatSnackBar = inject(MatSnackBar),
+    private _departamentoService: DepartamentoServices = inject(DepartamentoServices),
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +56,10 @@ export class CrearCentro implements OnInit {
     });
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+
   agregarCentro(formGroup: FormGroup) {
     const nombre = formGroup.get('nombre')?.value;
     const localizacion = formGroup.get('localizacion')?.value;
@@ -67,10 +72,12 @@ export class CrearCentro implements OnInit {
     console.log(idsDepartamentos);
 
     this._centroService.createCentro({ nombre, localizacion, idsDepartamentos }).subscribe({
-      next: (centro) => {
-        console.log(centro);
+      next: () => {
+        this.openSnackBar('Centro creado correctamente', 'Cerrar');
       },
-      error: () => {},
+      error: () => {
+        this.openSnackBar('Datos introducidos incorrectos', 'Cerrar');
+      },
     });
   }
 

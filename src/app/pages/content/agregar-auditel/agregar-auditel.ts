@@ -39,6 +39,7 @@ export class AgregarAuditel implements OnInit {
   estadoLogin: boolean;
   id_coord: number;
   tiposAsistencia: Array<String> = ['entrantes', 'salientes'];
+  tiposRacetel: Array<String> = ['inboud', 'outbound', 'impagos', 'soporte'];
 
   formControl: FormGroup = new FormGroup({
     expediente: new FormControl(''),
@@ -51,6 +52,7 @@ export class AgregarAuditel implements OnInit {
     coordinador: new FormControl(),
     departamento: new FormControl(),
     tipoAsistencia: new FormControl(),
+    tipoRacetel: new FormControl(),
   });
 
   colectivos: Array<Colectivo>;
@@ -66,7 +68,7 @@ export class AgregarAuditel implements OnInit {
     private _errorService: ErrorService = inject(ErrorService),
     private _comunicationService: ComunicationService = inject(ComunicationService),
     private _authService: AuthService = inject(AuthService),
-    private _router: Router = inject(Router)
+    private _router: Router = inject(Router),
   ) {}
 
   ngOnInit(): void {
@@ -87,19 +89,20 @@ export class AgregarAuditel implements OnInit {
     });
 
     this.formControl.get('id_empleado')?.valueChanges.subscribe((id) => {
+      if (!id) return;
+
       this._empleadosService.getEmpleadoById(id).subscribe((empleado) => {
         this._coordinadoresService
           .getCoordinadorById(empleado.coordinador?.id_coordinador!)
           .subscribe((coordinador) => {
+            // ACTUALIZACIÓN SEGURA
             this.formControl.patchValue({
               id_coordinador_empleado: coordinador.id_coordinador,
               id_departamento: coordinador.departamento?.id_departamento,
               coordinador: coordinador,
               departamento: coordinador.departamento,
-              tipoAsistencia:
-                coordinador.departamento?.nombre !== 'ASISTENCIA'
-                  ? coordinador.departamento?.nombre.toLowerCase()
-                  : null,
+              tipoAsistencia: null,
+              tipoRacetel: null,
             });
           });
       });
@@ -124,5 +127,10 @@ export class AgregarAuditel implements OnInit {
 
   get tipoAsistencia() {
     return this.formControl.get('tipoAsistencia')?.value;
+  }
+
+  get tipoRacetel() {
+    console.log(this.formControl.get('tipoRacetel')?.value);
+    return this.formControl.get('tipoRacetel')?.value;
   }
 }

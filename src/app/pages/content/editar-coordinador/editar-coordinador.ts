@@ -15,6 +15,8 @@ import { CoordinadorDTO } from '../../../core/Dto/CoordinadorDTO';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CoordinadorCentroDTO } from '../../../core/Dto/CoordinadorCentroDTO';
+import { ResolverComponent } from '../../../shared/components/resolver-component/resolver-component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-editar-coordinador',
@@ -23,6 +25,7 @@ import { CoordinadorCentroDTO } from '../../../core/Dto/CoordinadorCentroDTO';
     MatTableModule,
     MatExpansionPanelHeader,
     MatExpansionPanel,
+    ResolverComponent,
     RouterLink,
     MatButtonModule,
     MatTooltipModule,
@@ -54,7 +57,8 @@ export class EditarCoordinador implements OnInit {
     private _coordinadorService: CoordinadorService = inject(CoordinadorService),
     private _centroService: CentroService = inject(CentroService),
     private _departamentoService: DepartamentoServices = inject(DepartamentoServices),
-    private _router: ActivatedRoute = inject(ActivatedRoute)
+    private _snackBar: MatSnackBar = inject(MatSnackBar),
+    private _router: ActivatedRoute = inject(ActivatedRoute),
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +106,10 @@ export class EditarCoordinador implements OnInit {
     });
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+
   get empleados(): FormArray {
     return this.formControl.get('empleados') as FormArray;
   }
@@ -121,11 +129,15 @@ export class EditarCoordinador implements OnInit {
 
     this._coordinadorService.actualizarCoordinador(coordinadorDto).subscribe({
       next: (coordinador) => {
-        coordinador;
+        this.openSnackBar('Actualizado correctamente', 'Cerrar');
       },
       error: () => {
-        console.log('No se ha podido actualizar');
+        this.openSnackBar('Datos introducidos incorrectos', 'Cerrar');
       },
     });
+  }
+
+  get datosForm(): string {
+    return this.formControl.get('nombre')?.value as string;
   }
 }

@@ -1,65 +1,73 @@
-<section class="general-container-centros">
-  <section class="content">
-    <section class="title">
-      <button
-        matButton="elevated"
-        matTooltip="Volver a centros"
-        class="title-name"
-        [routerLink]="['/empleados/listadoCentros']"
-      >
-        <i class="fa-solid fa-angle-left"></i>Centros/Editar centro
-      </button>
-    </section>
-    <section class="datos-centro">
-      <form [formGroup]="formControl" action="">
-        <div class="row g-2">
-          <div class="col-md">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input
-              type="text"
-              id="nombre"
-              class="form-control"
-              formControlName="nombre"
-              name="nombre"
-            />
+@if (!datosForm) {
+  <section class="carga">
+    <app-resolver-component></app-resolver-component>
+  </section>
+} @else {
+  <section class="general-container-centros">
+    <section class="content">
+      <section class="title">
+        <button
+          matButton="elevated"
+          matTooltip="Volver a centros"
+          class="title-name"
+          [routerLink]="['/empleados/listadoCentros']"
+        >
+          <i class="fa-solid fa-angle-left"></i>Centros/Editar centro
+        </button>
+      </section>
+      <section class="datos-centro">
+        <form [formGroup]="formControl" action="">
+          <div class="row g-2">
+            <div class="col-md">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                class="form-control"
+                formControlName="nombre"
+                name="nombre"
+              />
+            </div>
+            <div class="col-md">
+              <label for="localizacion" class="form-label">Localización</label>
+              <input
+                type="text"
+                id="localizacion"
+                class="form-control"
+                formControlName="localizacion"
+                name="localizacion"
+              />
+            </div>
           </div>
-          <div class="col-md">
-            <label for="localizacion" class="form-label">Localización</label>
-            <input
-              type="text"
-              id="localizacion"
-              class="form-control"
-              formControlName="localizacion"
-              name="localizacion"
-            />
-          </div>
-        </div>
-        <div class="row g-2">
-          <div class="col-md">
-            <label for="departamento" class="form-label">Departamento</label>
-            <select
-              tpye="text"
-              id="departamento"
-              class="form-control"
-              formControlName="id_departamento"
-              name="departamento"
-            >
-              @for (departamento of todosDepartamentos; track $index) {
-              <option [value]="departamento.id_departamento">{{ departamento.nombre }}</option>
+          <div class="row g-2">
+            <div class="col-md">
+              <label for="departamento" class="form-label">Departamento</label>
+              <select
+                tpye="text"
+                id="departamento"
+                class="form-control"
+                formControlName="id_departamento"
+                name="departamento"
+              >
+                @for (departamento of todosDepartamentos; track $index) {
+                  <option [value]="departamento.id_departamento">{{ departamento.nombre }}</option>
+                }
+              </select>
+            </div>
+            <section class="beans">
+              @for (departamento of departamentos.controls; track $index) {
+                <app-beans
+                  [departamento]="departamento.value"
+                  (eliminarDepartamento)="eliminarDepartamento($event)"
+                ></app-beans>
               }
-            </select>
+            </section>
           </div>
-          <section class="beans">
-            @for(departamento of departamentos.controls; track $index){
-            <app-beans
-              [departamento]="departamento.value"
-              (eliminarDepartamento)="eliminarDepartamento($event)"
-            ></app-beans>
-            }
-          </section>
-        </div>
-        <button class="btn btn-dark" (click)="editarCentro(idCentro!, formControl)">Editar</button>
-      </form>
+          <button class="btn btn-dark" (click)="editarCentro(idCentro!, formControl)">
+            Editar
+          </button>
+        </form>
+      </section>
     </section>
   </section>
-</section>
+}

@@ -1,126 +1,146 @@
-@if(estadoLogin){
-<section class="general-container-empleados">
-  <section class="content">
-    <section class="title">
-      <button
-        matButton="elevated"
-        matTooltip="Volver a coordinadores"
-        matTooltipTrigger="hover"
-        class="title-name"
-        [routerLink]="['/empleados/listadoAuditeles']"
-      >
-        <i class="fa-solid fa-angle-left"></i>Auditeles/Crear auditel
-      </button>
-    </section>
-    <section class="datos-empleado">
-      <form [formGroup]="formControl">
-        <div class="row g-2">
-          <div class="col-md">
-            <label for="n_expediente" class="form-label">Número de expediente</label>
-            <input
-              type="text"
-              id="n_expediente"
-              class="form-control"
-              formControlName="expediente"
-              name="n_expediente"
-            />
+@if (estadoLogin) {
+  <section class="general-container-empleados">
+    <section class="content">
+      <section class="title">
+        <button
+          matButton="elevated"
+          matTooltip="Volver a coordinadores"
+          matTooltipTrigger="hover"
+          class="title-name"
+          [routerLink]="['/empleados/listadoAuditeles']"
+        >
+          <i class="fa-solid fa-angle-left"></i>Auditeles/Crear auditel
+        </button>
+      </section>
+      <section class="datos-empleado">
+        <form [formGroup]="formControl">
+          <div class="row g-2">
+            <div class="col-md">
+              <label for="n_expediente" class="form-label">Número de expediente</label>
+              <input
+                type="text"
+                id="n_expediente"
+                class="form-control"
+                formControlName="expediente"
+                name="n_expediente"
+              />
+            </div>
+            <div class="col-md">
+              <label for="fecha" class="form-label">Fecha</label>
+              <input
+                type="date"
+                id="fecha"
+                class="form-control"
+                formControlName="fecha"
+                name="fecha"
+              />
+            </div>
+            <div class="col-md">
+              <label for="empleado" class="form-label">Empleado</label>
+              <select
+                type="number"
+                id="empleado"
+                class="form-control"
+                formControlName="id_empleado"
+                name="empleado"
+              >
+                @for (empleado of empleados; track $index) {
+                  <option [ngValue]="empleado.id_empleado">{{ empleado.nombre }}</option>
+                }
+              </select>
+            </div>
           </div>
-          <div class="col-md">
-            <label for="fecha" class="form-label">Fecha</label>
-            <input
-              type="date"
-              id="fecha"
-              class="form-control"
-              formControlName="fecha"
-              name="fecha"
-            />
-          </div>
-          <div class="col-md">
-            <label for="empleado" class="form-label">Empleado</label>
-            <select
-              type="number"
-              id="empleado"
-              class="form-control"
-              formControlName="id_empleado"
-              name="empleado"
-            >
-              @for (empleado of empleados; track $index) {
-              <option [ngValue]="empleado.id_empleado">{{ empleado.nombre }}</option>
+          <div class="row g-2">
+            @if (id_empleado && id_coordinador_empleado) {
+              <div class="col-md">
+                <label for="coordinador_empleado" class="form-label">Coordinador empleado</label>
+                <select
+                  type="text"
+                  id="coordinador_empleado"
+                  class="form-control"
+                  formControlName="id_coordinador_empleado"
+                  name="coordinador_empleado"
+                >
+                  <option [value]="coordinador.id_coordinador">{{ coordinador.usuario }}</option>
+                </select>
+              </div>
+              <div class="col-md">
+                <label for="departamento" class="form-label">Departamento</label>
+                <select
+                  type="number"
+                  id="departamento_id"
+                  class="form-control"
+                  formControlName="id_departamento"
+                  name="departamento_id"
+                >
+                  <option [value]="departamento.id_departamento">{{ departamento.nombre }}</option>
+                </select>
+              </div>
+              @if (departamento.nombre == 'ASISTENCIA') {
+                <mat-radio-group
+                  aria-label="Selecciona una opción"
+                  formControlName="tipoAsistencia"
+                >
+                  @for (opcion of tiposAsistencia; track $index) {
+                    <mat-radio-button [value]="opcion">{{ opcion }}</mat-radio-button>
+                  }
+                </mat-radio-group>
               }
-            </select>
-          </div>
-        </div>
-        <div class="row g-2">
-          @if (id_empleado && id_coordinador_empleado){
-          <div class="col-md">
-            <label for="coordinador_empleado" class="form-label">Coordinador empleado</label>
-            <select
-              type="text"
-              id="coordinador_empleado"
-              class="form-control"
-              formControlName="id_coordinador_empleado"
-              name="coordinador_empleado"
-            >
-              <option [value]="coordinador.id_coordinador">{{ coordinador.usuario }}</option>
-            </select>
-          </div>
-          <div class="col-md">
-            <label for="departamento" class="form-label">Departamento</label>
-            <select
-              type="number"
-              id="departamento_id"
-              class="form-control"
-              formControlName="id_departamento"
-              name="departamento_id"
-            >
-              <option [value]="departamento.id_departamento">{{ departamento.nombre }}</option>
-            </select>
-          </div>
-          @if(departamento.nombre == 'ASISTENCIA'){
-          <mat-radio-group aria-label="Selecciona una opción" formControlName="tipoAsistencia">
-            @for (opcion of tiposAsistencia; track $index) {
-            <mat-radio-button [value]="opcion">{{ opcion }}</mat-radio-button>
+              @if (departamento.nombre == 'RACETEL') {
+                <mat-radio-group aria-label="Selecciona una opción" formControlName="tipoRacetel">
+                  @for (opcion of tiposRacetel; track $index) {
+                    <mat-radio-button [value]="opcion">{{ opcion }}</mat-radio-button>
+                  }
+                </mat-radio-group>
+              }
             }
-          </mat-radio-group>
-          } }
-          <div class="col-md">
-            <label for="colectivo" class="form-label">Colectivo</label>
-            <select
-              type="number"
-              id="colectivo"
-              class="form-control"
-              formControlName="colectivo"
-              name="colectivo"
-            >
-              @for (colectivo of colectivos; track $index) {
-              <option [ngValue]="colectivo.id_colectivo">{{ colectivo.nombre }}</option>
-              }
-            </select>
+            <div class="col-md">
+              <label for="colectivo" class="form-label">Colectivo</label>
+              <select
+                type="number"
+                id="colectivo"
+                class="form-control"
+                formControlName="colectivo"
+                name="colectivo"
+              >
+                @for (colectivo of colectivos; track $index) {
+                  <option [ngValue]="colectivo.id_colectivo">{{ colectivo.nombre }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md">
+              <label for="puntuación_total" class="form-label">Puntuación total</label>
+              <input
+                type="number"
+                id="puntuacion_total"
+                class="form-control"
+                formControlName="puntuacion_total_auditoria"
+                name="puntuacion_total"
+              />
+            </div>
           </div>
-          <div class="col-md">
-            <label for="puntuación_total" class="form-label">Puntuación total</label>
-            <input
-              type="number"
-              id="puntuacion_total"
-              class="form-control"
-              formControlName="puntuacion_total_auditoria"
-              name="puntuacion_total"
-            />
-          </div>
-        </div>
-      </form>
+        </form>
+      </section>
+      @if (departamento?.nombre === 'ASISTENCIA') {
+        @if (tipoAsistencia) {
+          <app-formulario-dinamico
+            [formControlPadre]="formControl"
+            [tipoFormulario]="tipoAsistencia"
+          ></app-formulario-dinamico>
+        }
+      } @else if (departamento?.nombre === 'RACETEL') {
+        @if (tipoRacetel) {
+          <app-formulario-dinamico
+            [formControlPadre]="formControl"
+            [tipoFormulario]="tipoRacetel"
+          ></app-formulario-dinamico>
+        }
+      } @else if (departamento) {
+        <app-formulario-dinamico
+          [formControlPadre]="formControl"
+          [tipoFormulario]="departamento.nombre.toLowerCase()"
+        ></app-formulario-dinamico>
+      }
     </section>
-    @if(departamento == "ASISTENCIA" && tiposAsistencia){
-    <app-formulario-dinamico
-      [formControlPadre]="formControl"
-      [tipoFormulario]="tipoAsistencia"
-    ></app-formulario-dinamico>
-    }@else if(departamento){
-    <app-formulario-dinamico
-      [formControlPadre]="formControl"
-      [tipoFormulario]="tipoAsistencia"
-    ></app-formulario-dinamico>
-    }
   </section>
-</section>
 }

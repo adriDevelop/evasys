@@ -14,6 +14,7 @@ import { ComunicationService } from '../../../core/services/comunication-service
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-crear-empleado',
   imports: [FormsModule, MatButtonModule, MatTooltipModule, RouterLink],
@@ -40,11 +41,12 @@ export class CrearEmpleado implements OnInit {
     private _empleadosService: EmpleadosService = inject(EmpleadosService),
     private _departamentosService: DepartamentoServices = inject(DepartamentoServices),
     private _centrosService: CentroService = inject(CentroService),
+    private _snackBar: MatSnackBar = inject(MatSnackBar),
     private _coordinadorService: CoordinadorService = inject(CoordinadorService),
     private _errorService: ErrorService = inject(ErrorService),
     private _acceptedService: AcceptedService = inject(AcceptedService),
     private _comunicationService: ComunicationService = inject(ComunicationService),
-    private _route: Router = inject(Router)
+    private _route: Router = inject(Router),
   ) {}
 
   ngOnInit(): void {
@@ -67,15 +69,19 @@ export class CrearEmpleado implements OnInit {
     });
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+
   crearEmpleado(empleado: Empleado) {
     this._empleadosService
       .createEmpleado(this.id_coordinador, this.id_departamento, empleado)
       .subscribe({
         next: () => {
-          this._acceptedService.showMessage('Empleado creado correctamente');
+          this.openSnackBar('Empleado creado correctente', 'Cerrar');
         },
         error: () => {
-          this._errorService.showMessageError('Faltan datos');
+          this.openSnackBar('No se ha podido crear el empleado', 'Cerrar');
         },
       });
   }

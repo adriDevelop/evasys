@@ -13,10 +13,12 @@ import { DepartamentoServices } from '../../../core/services/departamento-servic
 import { ColectivoService } from '../../../core/services/colectivo-service';
 import { Colectivo } from '../../../core/models/Colectivo';
 import { DepartamentoDTO } from '../../../core/Dto/DepartamentoDTO';
+import { ResolverComponent } from '../../../shared/components/resolver-component/resolver-component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-editar-departamento',
-  imports: [RouterLink, MatButton, MatTooltip, FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, MatButton, MatTooltip, FormsModule, ReactiveFormsModule, ResolverComponent],
   templateUrl: './editar-departamento.html',
   styleUrl: './editar-departamento.css',
 })
@@ -33,7 +35,8 @@ export class EditarDepartamento implements OnInit {
   constructor(
     private _router: ActivatedRoute = inject(ActivatedRoute),
     private _departamentoService: DepartamentoServices = inject(DepartamentoServices),
-    private _colectivoService: ColectivoService = inject(ColectivoService)
+    private _colectivoService: ColectivoService = inject(ColectivoService),
+    private _snackBar: MatSnackBar = inject(MatSnackBar),
   ) {
     this.id_departamento = parseInt(this._router.snapshot.paramMap.get('id')!);
   }
@@ -66,6 +69,10 @@ export class EditarDepartamento implements OnInit {
     });
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+
   obtenerIndexColectivo(colectivo: Colectivo): number | null {
     const index = this.colectivos.controls.findIndex((index) => {
       return index.value.nombre == colectivo.nombre;
@@ -89,10 +96,16 @@ export class EditarDepartamento implements OnInit {
     };
 
     this._departamentoService.editarDepartamento(departamentoDto).subscribe({
-      next: (departamento) => {},
+      next: (departamento) => {
+        this.openSnackBar('Actualizado correctamente', 'Cerrar');
+      },
       error: () => {
-        console.log('No se ha editado el departamento');
+        this.openSnackBar('Datos introducidos incorrectos', 'Cerrar');
       },
     });
+  }
+
+  get datosForm(): string {
+    return this.formControl.get('nombre')?.value as string;
   }
 }

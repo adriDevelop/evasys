@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Introduce la contraseña que quieras agregarle al coordinador</h2>
+<mat-dialog-content>
+  <label>Contraseña nueva</label>
+  <input type="text" id="password" class="form-control" [(ngModel)]="passwd" name="nombre" />
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="onNoClick()">Cancelar</button>
+  <button matButton [mat-dialog-close]="passwd()" cdkFocusInitial>Cambiar</button>
+</mat-dialog-actions>

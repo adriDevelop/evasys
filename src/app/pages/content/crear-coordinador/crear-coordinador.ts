@@ -24,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CentroService } from '../../../core/services/centro-service';
 import { DepartamentoServices } from '../../../core/services/departamento-services';
 import { CoordinadorCentroDTO } from '../../../core/Dto/CoordinadorCentroDTO';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-crear-coordinador',
@@ -69,7 +70,8 @@ export class CrearCoordinador implements OnInit {
     private _empleadosService: EmpleadosService = inject(EmpleadosService),
     private _coordinadorService: CoordinadorService = inject(CoordinadorService),
     private _centroService: CentroService = inject(CentroService),
-    private _departamentoService: DepartamentoServices = inject(DepartamentoServices)
+    private _snackBar: MatSnackBar = inject(MatSnackBar),
+    private _departamentoService: DepartamentoServices = inject(DepartamentoServices),
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +88,10 @@ export class CrearCoordinador implements OnInit {
     return this.formControl.get('empleados') as FormArray;
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+
   crearEmpleado(formControl: FormGroup) {
     const coordinadorCentroDto: CoordinadorCentroDTO = {
       coordinador: {
@@ -100,11 +106,11 @@ export class CrearCoordinador implements OnInit {
     };
 
     this._coordinadorService.crearCoordinador(coordinadorCentroDto).subscribe({
-      next: (coordinador) => {
-        console.log(coordinador);
+      next: (departamento) => {
+        this.openSnackBar('Coordinador creado correctamente', 'Cerrar');
       },
       error: () => {
-        console.log('No se ha podido crear el coordinador');
+        this.openSnackBar('Datos introducidos incorrectos', 'Cerrar');
       },
     });
   }

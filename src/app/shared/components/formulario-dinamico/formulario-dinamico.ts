@@ -16,6 +16,10 @@ import { AbogadosFormComponent } from '../abogados-form-component/abogados-form-
 import { AvjFormComponent } from '../avj-form-component/avj-form-component';
 import { ArimFormComponent } from '../arim-form-component/arim-form-component';
 import { AdministrativoFormComponent } from '../administrativo-form-component/administrativo-form-component';
+import { ImpagosFormComponent } from '../impagos-form-component/impagos-form-component';
+import { InboudFormComponent } from '../inboud-form-component/inboud-form-component';
+import { OutboundFormComponent } from '../outbound-form-component/outbound-form-component';
+import { SoporteFormComponent } from '../soporte-form-component/soporte-form-component';
 
 @Component({
   selector: 'app-formulario-dinamico',
@@ -42,6 +46,10 @@ export class FormularioDinamico implements OnChanges {
     avj: AvjFormComponent,
     arim: ArimFormComponent,
     administrativo: AdministrativoFormComponent,
+    impagos: ImpagosFormComponent,
+    inboud: InboudFormComponent,
+    outbound: OutboundFormComponent,
+    soporte: SoporteFormComponent,
   };
 
   ngOnChanges(changes: SimpleChanges): void {

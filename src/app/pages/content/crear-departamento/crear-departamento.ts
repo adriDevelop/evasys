@@ -13,6 +13,7 @@ import { DepartamentoServices } from '../../../core/services/departamento-servic
 import { ColectivoService } from '../../../core/services/colectivo-service';
 import { Colectivo } from '../../../core/models/Colectivo';
 import { DepartamentoDTO } from '../../../core/Dto/DepartamentoDTO';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-crear-departamento',
@@ -32,7 +33,8 @@ export class CrearDepartamento implements OnInit {
 
   constructor(
     private _departamentoService: DepartamentoServices = inject(DepartamentoServices),
-    private _colectivoService: ColectivoService = inject(ColectivoService)
+    private _snackBar: MatSnackBar = inject(MatSnackBar),
+    private _colectivoService: ColectivoService = inject(ColectivoService),
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +65,10 @@ export class CrearDepartamento implements OnInit {
     return this.formControl.get('colectivos') as FormArray;
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+
   crearDepartamento(formControl: FormGroup) {
     const idsColectivos = formControl.get('colectivos')?.value as Array<number>;
     const departamentoDto: DepartamentoDTO = {
@@ -73,9 +79,11 @@ export class CrearDepartamento implements OnInit {
     };
 
     this._departamentoService.crearDepartamento(departamentoDto).subscribe({
-      next: (departamento) => {},
+      next: (departamento) => {
+        this.openSnackBar('Departamento creado correctamente', 'Cerrar');
+      },
       error: () => {
-        console.log('No se ha podido agregar al departamento');
+        this.openSnackBar('Datos introducidos incorrectos', 'Cerrar');
       },
     });
   }
